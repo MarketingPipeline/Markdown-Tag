@@ -5,6 +5,8 @@
 
 
 // Markdown Elements Tags <md>
+
+document.onload = function (){
 var converter = new 
 showdown.Converter();
 
@@ -13,3 +15,4 @@ showdown.Converter();
             inputList.forEach(inputList=>inputList.innerHTML = converter.makeHtml(inputList.innerText));
 
 
+}
