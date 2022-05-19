@@ -13,8 +13,12 @@ Add support to any website to use markdown ANYWHERE with a simple tag! Like so -
 
 How to use - 
 
+Add this to your css
 
-include the script inside.
+    md {
+        white-space: pre-line;
+        }
+include the script at the bottom of your script
 
 
-To-do - fix line breaks
+To-do - fix line breaks via JS
