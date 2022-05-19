@@ -9,7 +9,9 @@
 document.onload = function (){
 var converter = new 
 showdown.Converter();
-
+converter.setOption('tables', true);
+            
+            
             var input = document.getElementsByTagName("md");
             var inputList = Array.prototype.slice.call(input);
             inputList.forEach(inputList=>inputList.innerHTML = converter.makeHtml(inputList.innerText));
