@@ -21,4 +21,10 @@ Add this to your css
 include the script at the bottom of your script
 
 
-To-do - fix line breaks via JS
+To-do - 
+
+- [ ] Line Breaks Fixed 
+   - [ ] add line break CSS via JS
+   - [ ] Fix Line Break - White Space Size
+- [ ] Fetch and load newest version of ShadowDown 
+- [ ] Detect proper load method - on body etc. 
