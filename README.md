@@ -15,14 +15,23 @@ How to use -
 
 include the script at the bottom of your script
 
+
+Note:
+
+You might need to use this for line breaks 
+
+             md {
+    white-space: pre-line;
+    }
+
 to use Github Markdown Styling include https://raw.githubusercontent.com/MarketingPipeline/Markdown-Elements/main/stylesheets/github_md.css on the page rendering Markdown Content
 
 
 
 To-do - 
 
-- [X] Line Breaks Fixed 
-   - [X] add line break CSS via JS (NOT NEEDED ANYMORE)
-   - [X] Fix Line Break - White Space Size
+- [ ] Line Breaks Fixed 
+   - [ ] add line break CSS via JS (NOT NEEDED ANYMORE)
+   - [ ] Fix Line Break - White Space Size
 - [ ] Fetch and load newest version of ShadowDown 
 - [ ] Detect proper load method - on body etc. 
