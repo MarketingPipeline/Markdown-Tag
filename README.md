@@ -73,11 +73,11 @@ details.
 
 ## To-do - 
 
-- [ ] Line Breaks Fixed 
-   - [ ] add line break CSS via JS?
-   - [ ] Fix Line Break - White Space Size
+- [X] Line Breaks Fixed 
+   - [X] add line break CSS via JS?
+   - [X] Fix Line Break - White Space Size
 - [ ] Fetch and load newest version of Markdown To HTML script
 - [ ] Detect proper load method - on body etc. 
-- [ ] Tables don't render properly on all the time. 
+- [X] Tables don't render properly on all the time. 
 - [ ] Add options for adding Github Style sheet to <md> tag - so seperate styles can be used in one page
 - [ ] Make sure all Markdown is properly working with new style sheets.  
