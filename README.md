@@ -35,3 +35,5 @@ To-do -
    - [ ] Fix Line Break - White Space Size
 - [ ] Fetch and load newest version of ShadowDown 
 - [ ] Detect proper load method - on body etc. 
+- [ ]  Tables don't render properly
+- [ ]  Add options for adding Github Style sheet to <md> tag - so seperate styles can be used in one page
