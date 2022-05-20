@@ -10,6 +10,9 @@
             </p>
  <p align="center">              
 Use markdown in HTML with ease!
+  <p align="center">        
+<small> View the demo <a href="https://marketingpipeline.github.io/Markdown-Elements/">here</a></small>
+       </p>
       <p align="center">        
 <small><i> Powered by <a href="https://github.com/showdownjs/showdown">Showdown</a></i></small>
        </p>
@@ -31,16 +34,17 @@ Use markdown in HTML with ease!
 
 
 
-   include this script at the bottom of your HTML document.
+   include this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-elements.js) at the bottom of your HTML document.
          
-         
-          <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-elements.js"></script> 
+    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-elements.js"></script> 
           
          
 ### How to use GitHub Styling
 
 to use Github Markdown Styling include this [stylesheet](https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css) on the page rendering Markdown Content
 
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css">    
 
       
           
