@@ -36,14 +36,12 @@ Use markdown in HTML with ease!
          
           <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-elements.js"></script> 
           
-          
+         
 ### How to use GitHub Styling
 
-to use Github Markdown Styling include this [stylesheet](https://raw.githubusercontent.com/MarketingPipeline/Markdown-Elements/main/stylesheets/github_md.css) on the page rendering Markdown Content
+to use Github Markdown Styling include this [stylesheet](https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css) on the page rendering Markdown Content
 
 
-<small><i><b>Note:</b></i> you might need to apply the CSS directly in your HTML to over-ride your current CSS values using a <code><style></code> tag</small>
-      
       
           
              
