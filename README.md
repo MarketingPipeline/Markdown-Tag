@@ -72,6 +72,6 @@ participate in this project.
 
 ## License ![GitHub](https://img.shields.io/github/license/MarketingPipeline/Markdown-Elements)
 
-This project is licensed under the MIT License - see the
+This project is licensed under the GPL License - see the
 [LICENSE.md](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/LICENSE) file for
 details.
