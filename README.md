@@ -70,6 +70,7 @@ Instead of using a &lt;md> tag use
           
 ## Known Issues 
 
+- [ ] GitHub Flavored Markdown Syntax is not correct 100%
 - [ ] GitHub Syntax Needs HTML Decoding Fixed 
 - [ ] XSS Vunerability Fix
 
