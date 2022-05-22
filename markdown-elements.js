@@ -32,6 +32,15 @@ converter.setOption('emoji', 'on')
 
 converter.setOption('strikethrough', 'on');
 
+converter.setOption('tasklists', 'true');
+
+
+converter.setOption('ghMentions', 'true');
+
+
+converter.setOption('simplifiedAutoLink', 'true');
+
+
 /* Convert Markdown Tags */ 
 
 if (document.getElementsByTagName("md").length > 0) {
