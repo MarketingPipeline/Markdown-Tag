@@ -37,19 +37,6 @@ if (document.getElementsByTagName("github-md").length > 0) {
 addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');
 var converter = new showdown.Converter()
 
-converter.setOption('tables', 'on')
-			
-converter.setOption('emoji', 'on')
-
-converter.setOption('strikethrough', 'on');
-
-converter.setOption('tasklists', 'true');
-
-
-converter.setOption('ghMentions', 'true');
-
-
-converter.setOption('simplifiedAutoLink', 'true');
   
   
 GitHub_MD_TAG = document.getElementsByTagName("github-md");
