@@ -8,7 +8,9 @@
 - [ ] Add Github Syntax Using Showdown (No API Key Needed)
      - [ ] Emoji Support For Github Syntax
      - [ ] Decoding Fix For HTML
-     - [ ] XSS Fix For Showdown
+     - [ ] GitHub Syntax Needs HTML Decoding Fixed 
+     - [ ] Match GFM style 100%. 
+- [ ] XSS Vunerability Fix
          
  ```javascript
        function decodeString(string) {
@@ -116,7 +118,9 @@
     .replace(/&amp;/g, "&")
 }
 ```
-        
+
+
+
 - [ ] Discussion with developers / community
      - [ ] Possibly turn into one script (and seperate tags?) 
      - [ ] Other features to add?
