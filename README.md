@@ -11,7 +11,7 @@
  <p align="center">              
 Use markdown in HTML with ease!
   <p align="center">        
-<small> View the demo <a href="https://marketingpipeline.github.io/Markdown-Elements/">here</a></small>
+<small> View the demo <a href="https://marketingpipeline.github.io/Markdown-Tag/">here</a></small>
        </p>
   
 </p>
