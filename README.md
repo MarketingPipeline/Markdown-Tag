@@ -41,10 +41,9 @@ Use markdown in HTML with ease!
          
 ### How to use GitHub Styling
 
-to use Github Markdown Styling include this [stylesheet](https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css) on the page rendering Markdown Content
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css">    
+Instead of using a &lt;md> tag use
+   
+         <github-md># Example </github-md>
 
       
           
