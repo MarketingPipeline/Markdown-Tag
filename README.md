@@ -32,9 +32,9 @@ Use markdown in HTML with ease!
 
 
 
-   include this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag.js) at the <b>bottom</b> of your HTML document.
+   include this [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag.js) at the <b>bottom</b> of your HTML document.
          
-    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-tag.js"></script> 
+    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script> 
 
 
 
@@ -53,16 +53,16 @@ Instead of using a &lt;md> tag use
   
 ### How to use CommonMark Syntax
  
- If you wish to use [CommonMark](https://spec.commonmark.org/current/) syntax instead of Showdown's use this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag-commonmark.js) instead of the one above at the <b>bottom</b> of your HTML document.
+ If you wish to use [CommonMark](https://spec.commonmark.org/current/) syntax instead of Showdown's use this [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-commonmark.js) instead of the one above at the <b>bottom</b> of your HTML document.
          
-    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-tag-commonmark.js"></script> 
+    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-commonmark.js"></script> 
 
 ### How to use GitHub Flavored Markdown Syntax
  
  If you wish to use [GitHub Flavored Markdown Spec](https://github.github.com/gfm/) syntax [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag-Github.js) instead of the other script's above at the <b>bottom</b> of your HTML document. 
  
          
-    <script src="https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag-Github.js"></script> 
+    <script src="https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-Github.js"></script> 
       
  
   <i>Note:</i> This options includes - Tables, GitHub Mentions & More.
@@ -80,12 +80,12 @@ Instead of using a &lt;md> tag use
 
 
 
-## Contributing ![GitHub](https://img.shields.io/github/contributors/MarketingPipeline/Markdown-Elements)
+## Contributing ![GitHub](https://img.shields.io/github/contributors/MarketingPipeline/Markdown-Tag)
 
 Want to improve this? Create a pull request with detailed changes / improvements! If approved you will be added to the list of contributors of this awesome project!
 
 
-Looking for a task to work on? Check the tasks that need improved in the [to-do](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/to-do.md) list.
+Looking for a task to work on? Check the tasks that need improved in the [to-do](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/to-do.md) list.
 
 
 See also the list of
