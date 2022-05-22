@@ -20,7 +20,7 @@ function addCss(fileName) {
   head.appendChild(link);
 }
 
-addCss('https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css');
+addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');
 
 if (document.getElementsByTagName("md").length > 0) {
   
