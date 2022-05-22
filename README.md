@@ -32,24 +32,30 @@ Use markdown in HTML with ease!
 
 
 
-   include this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-elements.js) at the bottom of your HTML document.
+   include this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-elements.js) at the <b>bottom</b> of your HTML document.
          
     <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-elements.js"></script> 
 
 
 
-
-### How to use GitHub Syntax
-
-  use this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag-GitHub.js) instead of the one above at the bottom of your HTML document.
-         
-    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-tag-GitHub.js"></script> 
          
 ### How to use GitHub Styling
 
 Instead of using a &lt;md> tag use
    
          <github-md># Example </github-md>
+
+
+
+## Syntax
+
+  This script uses Showdown to render Markdown - to read about the Showdown's Markdown syntax style click [here](https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax)
+  
+### How to use CommonMark / GitHub Syntax
+ 
+ If you wish to use [CommonMark](https://spec.commonmark.org/current/) syntax instead of Showdown's use this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag-GitHub.js) instead of the one above at the <b>bottom</b> of your HTML document.
+         
+    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-tag-GitHub.js"></script> 
 
       
           
