@@ -1,4 +1,4 @@
-# Markdown-Elements
+# Markdown-Tag
 
  
 <p align="center">
@@ -32,9 +32,9 @@ Use markdown in HTML with ease!
 
 
 
-   include this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-elements.js) at the <b>bottom</b> of your HTML document.
+   include this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag.js) at the <b>bottom</b> of your HTML document.
          
-    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-elements.js"></script> 
+    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-tag.js"></script> 
 
 
 
@@ -89,11 +89,11 @@ Looking for a task to work on? Check the tasks that need improved in the [to-do]
 
 
 See also the list of
-[contributors](https://github.com/MarketingPipeline/Markdown-Elements/graphs/contributors) who
+[contributors](https://github.com/MarketingPipeline/Markdown-Tag/graphs/contributors) who
 participate in this project.
 
-## License ![GitHub](https://img.shields.io/github/license/MarketingPipeline/Markdown-Elements)
+## License ![GitHub](https://img.shields.io/github/license/MarketingPipeline/Markdown-Tag)
 
 This project is licensed under the GPL License - see the
-[LICENSE.md](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/LICENSE) file for
+[LICENSE.md](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/LICENSE) file for
 details.
