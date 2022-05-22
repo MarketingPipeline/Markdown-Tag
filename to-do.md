@@ -3,6 +3,8 @@
 ## To-do  
 
 
-- [ ] Fetch and load newest version of Showdown.
+- [ ] Fetch and load newest version of markdown parsers.
 - [ ] Detect proper load method - on body etc. 
-- [ ] Add options for adding Github Style sheet to <md> tag - so seperate styles can be used in one page
+- [ ] Add proper Github Syntax Options For (Showdown) with center options etc.
+- [ ] Emoji Support For Github Syntax (Markdown-It)
+  
