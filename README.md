@@ -59,7 +59,7 @@ Instead of using a &lt;md> tag use
 
 ### How to use GitHub Flavored Markdown Syntax
  
- If you wish to use [GitHub Flavored Markdown Spec](https://github.github.com/gfm/) syntax [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag-Github.js) instead of the other script's above at the <b>bottom</b> of your HTML document. 
+ If you wish to use [GitHub Flavored Markdown Spec](https://github.github.com/gfm/) syntax [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-Github.js) instead of the other script's above at the <b>bottom</b> of your HTML document. 
  
          
     <script src="https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-Github.js"></script> 
