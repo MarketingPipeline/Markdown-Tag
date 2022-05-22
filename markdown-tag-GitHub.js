@@ -32,6 +32,12 @@ addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/styleshe
 
 
 
+    /* Add Github Input Boxes / Lists Checkboxes */ 
+document.body.innerHTML = document.body.innerHTML.replaceAll('- [ ]', `<input type="checkbox" onclick="return false;" disabled="disabled">`).replaceAll('- [X]', `
+<input type="checkbox"    onclick="return false;" checked>
+`);
+
+
 
 
 /* Convert Tags To Markdown */ 
