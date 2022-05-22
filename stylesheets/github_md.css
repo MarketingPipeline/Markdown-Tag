@@ -1,4 +1,4 @@
-md {
+github-md {
   font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #111;
   background-color: #fdfdfd;
@@ -12,16 +12,16 @@ md {
 }
 
 @media only screen and (max-width: 600px) {
-  md {
+  github-md {
     padding: 5px;
   }
 
-  md > #content {
+  github-md > #content {
     padding: 0px 20px 20px 20px !important;
   }
 }
 
-md > #content {
+github-md > #content {
   margin: 0px;
   max-width: 900px;
   border: 1px solid #e1e4e8;
@@ -32,7 +32,7 @@ md > #content {
   margin-right: auto;
 }
 
-md hr {
+github-md hr {
   color: #bbb;
   background-color: #bbb;
   height: 1px;
@@ -45,7 +45,7 @@ md hr {
 /**
  * Links
  */
-md a {
+github-md a {
   color: #0366d6;
   text-decoration: none; }
   a:visited {
@@ -54,7 +54,7 @@ md a {
     color: #0366d6;
     text-decoration: underline; }
 
-md pre {
+github-md pre {
   background-color: #f6f8fa;
   border-radius: 3px;
   font-size: 85%;
@@ -67,7 +67,7 @@ md pre {
   * Code blocks
   */
 
-md code {
+github-md code {
   background-color: rgba(27,31,35,.05);
   border-radius: 3px;
   font-size: 85%;
@@ -77,7 +77,7 @@ md code {
   font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
 }
 
-md pre > md code {
+github-md pre > github-md code {
   background-color: transparent;
   border: 0;
   display: inline;
@@ -93,7 +93,7 @@ md pre > md code {
 /**
  * Blockquotes
  */
-md blockquote {
+github-md blockquote {
   margin-left: 30px;
   margin-top: 0px;
   margin-bottom: 16px;
@@ -106,7 +106,7 @@ md blockquote {
   letter-spacing: -1px;
   font-style: italic;
 }
-md blockquote * {
+github-md blockquote * {
   font-style: normal !important;
   letter-spacing: 0;
   color: #6a737d !important;
@@ -115,7 +115,7 @@ md blockquote * {
 /**
  * Tables
  */
-md table {
+github-md table {
   border-spacing: 2px;
   display: block;
   font-size: 14px;
@@ -126,23 +126,23 @@ md table {
   border-collapse: collapse;
 }
 
-md td {
+github-md td {
   padding: 6px 13px;
   border: 1px solid #dfe2e5;
 }
 
-md th {
+github-md th {
   font-weight: 600;
   padding: 6px 13px;
   border: 1px solid #dfe2e5;
 }
 
-md tr {
+github-md tr {
   background-color: #fff;
   border-top: 1px solid #c6cbd1;
 }
 
-md table tr:nth-child(2n) {
+github-md table tr:nth-child(2n) {
   background-color: #f6f8fa;
 }
 
@@ -150,36 +150,36 @@ md table tr:nth-child(2n) {
  * Others
  */
 
-md img {
+github-md img {
   max-width: 100%;
 }
 
-md p {
+github-md p {
   line-height: 24px;
   font-weight: 400;
   font-size: 16px;
   color: #24292e; }
 
-md ul {
+github-md ul {
   margin-top: 0; }
 
-md li {
+github-md li {
   color: #24292e;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5; }
 
-md li + li {
+github-md li + li {
   margin-top: 0.25em; }
 
-md {
+github-md {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: #24292e; }
 
-md a:visited {
+github-md a:visited {
   color: #0366d6; }
 
-md h1, h2, h3 {
+github-md h1, h2, h3 {
   border-bottom: 1px solid #eaecef;
   color: #111;
   /* Darker */ }
