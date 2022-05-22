@@ -51,11 +51,11 @@ Instead of using a &lt;md> tag use
 
   This script uses Showdown to render Markdown - to read about the Showdown's Markdown syntax style click [here](https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax)
   
-### How to use CommonMark / GitHub Syntax
+### How to use CommonMark Syntax
  
- If you wish to use [CommonMark](https://spec.commonmark.org/current/) syntax instead of Showdown's use this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag-GitHub.js) instead of the one above at the <b>bottom</b> of your HTML document.
+ If you wish to use [CommonMark](https://spec.commonmark.org/current/) syntax instead of Showdown's use this [script](https://github.com/MarketingPipeline/Markdown-Elements/blob/main/markdown-tag-commonmark.js) instead of the one above at the <b>bottom</b> of your HTML document.
          
-    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-tag-GitHub.js"></script> 
+    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/markdown-tag-commonmark.js"></script> 
 
       
           
