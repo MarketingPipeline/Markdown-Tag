@@ -22,13 +22,23 @@ function addCss(fileName) {
 
 addCss('https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css');
 
-
+if (document.getElementsByTagName("md").length > 0) {
+  
 /* Convert Markdown Tags */ 
-MD_TAG = document.getElementsByTagName("md").innerHTML;
+var MD_TAG = document.getElementsByTagName("md");
 for(var i=0; i<MD_TAG.length; i++)
-MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].textContent)
+MD_TAG[i].innerHTML = md.render(MD_TAG[i].innerHTML)
 
 
-GitHub_MD_TAG = document.getElementsByTagName("github-md").innerHTML;
+}
+
+
+if (document.getElementsByTagName("github-md").length > 0) {
+  
+
+var GitHub_MD_TAG = document.getElementsByTagName("github-md");
 for(var i=0; i<GitHub_MD_TAG.length; i++)
-GitHub_MD_TAG[i].innerHTML = converter.makeHtml(GitHub_MD_TAG[i].textContent)
+GitHub_MD_TAG[i].innerHTML = md.render(GitHub_MD_TAG[i].innerHTML)
+
+}
+
