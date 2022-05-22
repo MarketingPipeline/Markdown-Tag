@@ -3,14 +3,44 @@
 //# sourceMappingURL=showdown.min.js.map
 
 
+
+/* Add Github CSS  */ 
+
+
+
+function addCss(fileName) {
+
+  var head = document.head;
+  var link = document.createElement("link");
+
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href = fileName;
+
+  head.appendChild(link);
+}
+
+addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');
+
+/* Showdown Options */ 
+
 var converter = new showdown.Converter()
 
 converter.setOption('tables', 'on')
 			
-			converter.setOption('emoji', 'on')
+converter.setOption('emoji', 'on')
 
 converter.setOption('strikethrough', 'on');
-			elements = document.getElementsByTagName("md");
-			for(var i=0; i<elements.length; i++)
-				elements[i].innerHTML = converter.makeHtml(elements[i].textContent)
+
+/* Convert Markdown Tags */ 
+MD_TAG = document.getElementsByTagName("md");
+for(var i=0; i<MD_TAG.length; i++)
+MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].textContent)
+
+
+GitHub_MD_TAG = document.getElementsByTagName("github-md");
+for(var i=0; i<GitHub_MD_TAG.length; i++)
+GitHub_MD_TAG[i].innerHTML = converter.makeHtml(GitHub_MD_TAG[i].textContent)
+
+
 
