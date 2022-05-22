@@ -4,10 +4,18 @@
 
 
 
-
+/* Markdown-It Options */ 
 const md = window.markdownit();
 md.options.html = true;
+md.options.linkify = true;
+md.options.typographer = true;
 
+
+
+
+
+
+/* Add Github CSS Styling */ 
 function addCss(fileName) {
 
   var head = document.head;
@@ -21,6 +29,12 @@ function addCss(fileName) {
 }
 
 addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');
+
+
+
+
+
+/* Convert Tags To Markdown */ 
 
 if (document.getElementsByTagName("md").length > 0) {
   
