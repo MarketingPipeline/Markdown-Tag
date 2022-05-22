@@ -20,10 +20,21 @@ function addCss(fileName) {
   head.appendChild(link);
 }
 
+
+/* Convert Markdown Tags */ 
+
+if (document.getElementsByTagName("md").length > 0) {
+  
+var converter = new showdown.Converter()  
+MD_TAG = document.getElementsByTagName("md");
+for(var i=0; i<MD_TAG.length; i++)
+MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].innerHTML)
+}
+
+
+if (document.getElementsByTagName("github-md").length > 0) {
+  
 addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');
-
-/* Showdown Options */ 
-
 var converter = new showdown.Converter()
 
 converter.setOption('tables', 'on')
@@ -39,21 +50,11 @@ converter.setOption('ghMentions', 'true');
 
 
 converter.setOption('simplifiedAutoLink', 'true');
-
-
-/* Convert Markdown Tags */ 
-
-if (document.getElementsByTagName("md").length > 0) {
-MD_TAG = document.getElementsByTagName("md");
-for(var i=0; i<MD_TAG.length; i++)
-MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].textContent)
-}
-
-
-if (document.getElementsByTagName("github-md").length > 0) {
+  
+  
 GitHub_MD_TAG = document.getElementsByTagName("github-md");
 for(var i=0; i<GitHub_MD_TAG.length; i++)
-GitHub_MD_TAG[i].innerHTML = converter.makeHtml(GitHub_MD_TAG[i].textContent)
+GitHub_MD_TAG[i].innerHTML = converter.makeHtml(GitHub_MD_TAG[i].innerHTML)
 }
 
 
