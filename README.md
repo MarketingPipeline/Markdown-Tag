@@ -72,7 +72,7 @@ How to use <b><i>GitHub Flavored Markdown Syntax</b></i>:
  If you wish to use [GitHub Flavored Markdown Spec](https://github.github.com/gfm/) syntax  use this [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-Github.js) instead of the other script's above at the <b>bottom</b> of your HTML document. 
  
          
-    <script src="https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-Github.js"></script> 
+       <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-GitHub.js"></script> 
       
  
   <i>Note:</i> This options includes - Tables, GitHub Mentions & More.
