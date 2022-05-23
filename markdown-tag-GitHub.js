@@ -24,7 +24,21 @@ function addCss(fileName) {
 /* Convert Markdown Tags */ 
 
 if (document.getElementsByTagName("md").length > 0) {
-  
+
+converter.setOption('tables', 'on')
+			
+converter.setOption('emoji', 'on')
+
+converter.setOption('strikethrough', 'on');
+
+converter.setOption('tasklists', 'true');
+
+
+converter.setOption('ghMentions', 'true');
+
+
+converter.setOption('simplifiedAutoLink', 'true');
+    
 var converter = new showdown.Converter()  
 MD_TAG = document.getElementsByTagName("md");
 for(var i=0; i<MD_TAG.length; i++)
