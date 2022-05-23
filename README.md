@@ -5,23 +5,32 @@
   <img height="400" src="https://imgur.com/oQgTNF3.png" />
 </p>
                                                                      
-<p align="center">     
-            <b> Add a Markdown tag to your HTML </b>
-            </p>
- <p align="center">              
-Use markdown in HTML with ease!
-  <p align="center">        
-<small> View the demo <a href="https://marketingpipeline.github.io/Markdown-Tag/">here</a></small>
-       </p>
+
+
+   <p align="center">
+    The easiest way to add Markdown support to your website!
   
-</p>
+  <br>
+  <small> <b><i>Show your support!</i> </b></small>
+  <br>
+   <a href="https://github.com/MarketingPipeline/Markdown-Tag">
+    <img title="Star on GitHub" src="https://img.shields.io/github/stars/MarketingPipeline/Website-Launch-Checklist.svg?style=social&label=Star">
+  </a>
+  <a href="https://github.com/MarketingPipeline/Markdown-Tag/fork">
+    <img title="Fork on GitHub" src="https://img.shields.io/github/forks/MarketingPipeline/Website-Launch-Checklist.svg?style=social&label=Fork">
+  </a>
+   </p>  
 
 
 
 
 
-## How to use 
+## Example and usage
 
+You can view a demo of Markdown Tag in use [here.](https://marketingpipeline.github.io/Markdown-Tag)
+
+
+How to use <b><i>Markdown Tag</b></i>:
 
   Add support to any website to use markdown ANYWHERE with a simple tag! Like so -
 
@@ -39,7 +48,8 @@ Use markdown in HTML with ease!
 
 
          
-### How to use GitHub Styling
+
+How to use <b><i>Markdown Tag</b></i> with <b>GitHub Styling</b>:
 
 Instead of using a &lt;md> tag use
    
@@ -50,14 +60,14 @@ Instead of using a &lt;md> tag use
 ## Syntax
 
   This script uses Showdown to render Markdown - to read about the Showdown's Markdown syntax style click [here](https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax)
-  
-### How to use CommonMark Syntax
- 
+
+How to use <b><i>CommonMark Syntax</b></i>:
+
  If you wish to use [CommonMark](https://spec.commonmark.org/current/) syntax instead of Showdown's use this [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-commonmark.js) instead of the one above at the <b>bottom</b> of your HTML document.
          
     <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-commonmark.js"></script> 
 
-### How to use GitHub Flavored Markdown Syntax
+How to use <b><i>GitHub Flavored Markdown Syntax</b></i>:
  
  If you wish to use [GitHub Flavored Markdown Spec](https://github.github.com/gfm/) syntax [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-Github.js) instead of the other script's above at the <b>bottom</b> of your HTML document. 
  
