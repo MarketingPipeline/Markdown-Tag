@@ -14,10 +14,10 @@
   <small> <b><i>Show your support!</i> </b></small>
   <br>
    <a href="https://github.com/MarketingPipeline/Markdown-Tag">
-    <img title="Star on GitHub" src="https://img.shields.io/github/stars/MarketingPipeline/Website-Launch-Checklist.svg?style=social&label=Star">
+    <img title="Star on GitHub" src="https://img.shields.io/github/stars/MarketingPipeline/Markdown-Tag.svg?style=social&label=Star">
   </a>
   <a href="https://github.com/MarketingPipeline/Markdown-Tag/fork">
-    <img title="Fork on GitHub" src="https://img.shields.io/github/forks/MarketingPipeline/Website-Launch-Checklist.svg?style=social&label=Fork">
+    <img title="Fork on GitHub" src="https://img.shields.io/github/forks/MarketingPipeline/Markdown-Tag.svg?style=social&label=Fork">
   </a>
    </p>  
 
