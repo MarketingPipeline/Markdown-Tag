@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MarkdownTag</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css">
+	<link rel="stylesheet" href="./stylesheets/global.css">
+	<link rel="stylesheet" href="./stylesheets/landing.css">
+	<!-- <script src="https://unpkg.com/@ungap/custom-elements@1.0.2/min.js"></script>  --> <!-- WIP: Extend BuiltIn Element to prevent script injection -->
+	<script src="../markdown-tag-wc.js"></script>
+	<!-- Made by: DarkenLM -->
+</head>
+<body>
+	<nav>
+		<div class="logo"></div>
+		<ul class="menu">
+		<div class="menu__item toggle"><span></span></div>
+		<li class="menu__item"><a href="docs.html" class="link link--dark"><i class="fa fa-book"></i> Documentation</a></li>
+		<li class="menu__item"><a href="https://github.com/MarketingPipeline/Markdown-Tag" class="link link--dark"><i class="fa fa-github"></i> Github</a></li>
+		</ul>
+	</nav>
+	<div class="hero">
+		<h1 class="hero__title">MarkdownTag</h1>
+		<p class="hero__description">The easiest way to add Markdown support to your website!</p>
+	</div>
+	<div class="hero__image" style="box-shadow: none;">
+		<img src="https://camo.githubusercontent.com/8c194e7633bf32102294928e653b191086a3ba6b3a79297145204838e17a8572/68747470733a2f2f696d6775722e636f6d2f6f5167544e46332e706e67">
+		<!-- <pre>
+		  < !-- Place your demo code here -- >
+		  <code class="shell-session demo">hyperyolo ~ $ </code>
+		</pre> -->
+	</div>
+	<div class="hero__terminal" style="animation-delay: 0.5s; background-color: #838383b3; max-height: 500px; overflow-y: hidden;">
+		<pre style="max-height: 500px;overflow-y: scroll;">
+			<div class="tab__container" style="position: absolute; left: 95%;">
+				<ul class="tab__menu">
+				  <li class="tab function active" data-function="changeMdFormatter" data-function-arguments='["showcase_md_tag", "default"]'>default</li>
+				  <li class="tab function" data-function="changeMdFormatter" data-function-arguments='["showcase_md_tag", "github"]'>github</li>
+				  <li class="tab function" data-function="changeMdFormatter" data-function-arguments='["showcase_md_tag", "commonmark"]'>commonmark</li>
+				  <li class="tab function" data-function="changeMdFormatter" data-function-arguments='["showcase_md_tag", "marked"]'>marked</li>
+				</ul>
+			</div>
+			<div class="hero__terminal" style="border: 1px solid var(--accent-color); background-color: var(--medium-gray-color);">
+				<md-tag id="showcase_md_tag" flavor="default" parser_root="../parsers">
+### Heading
+
+# H1
+## H2
+### H3
+
+### Bold
+
+**bold text**
+
+### Italic
+
+*italicized text*
+
+### Blockquote
+
+> blockquote
+
+### Ordered List
+
+1. First item
+2. Second item
+3. Third item
+
+### Unordered List
+
+- First item
+- Second item
+- Third item
+
+### Code
+
+`code`
+
+### Horizontal Rule
+
+---
+
+### Link
+
+[Markdown Guide](https://www.markdownguide.org)
+
+### Image
+
+![alt text](https://www.markdownguide.org/assets/images/tux.png)
+
+## Extended Syntax
+
+These elements extend the basic syntax by adding additional features. Not all Markdown applications support these elements.
+
+### Table
+
+| Syntax | Description |
+| ----------- | ----------- |
+| Header | Title |
+| Paragraph | Text |
+
+### Fenced Code Block
+
+```
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+```
+
+### Footnote
+
+Here's a sentence with a footnote. [^1]
+
+[^1]: This is the footnote.
+
+### Heading ID
+
+### My Great Heading {#custom-id}
+
+### Definition List
+
+term
+: definition
+
+### Strikethrough
+
+~~The world is flat.~~
+
+### Task List
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
+				</md-tag>
+			</div>
+		  	<!-- Place your demo code here -->
+		</pre>
+	</div>
+	<div class="wrapper">
+		<div class="installation">
+			<h3 class="section__title">Installation</h3>
+			Add this line of code anywhere in your HTML page:
+			<pre class="nohighlight code" style="white-space: normal; padding: 1rem 1.5rem;">
+				<code class="tab__pane active browser">&lt;script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-wc.js"&gt;&lt;/script&gt;</code>
+			</pre>
+		</div>
+		<div class="feature">
+			<div class="feature__item">
+				<h3 class="section__title">Fast & Light</h3>
+				<p>Based on the WebComponents API, each md-tag is guarenteed to be isolated from the DOM and only affects properties inside itself.</p>
+			</div>
+			<div class="feature__item">
+				<h3 class="section__title">Dependency Backup</h3>
+				<p>You can use your use your own version of the supported markdown parsers, or use the predefined version, downloaded straight from the web.</p>
+			</div>
+			<div class="feature__item">
+				<h3 class="section__title">Easy to Configure</h3>
+				<p>Simply edit the md-tag's contents and it will automatically edit the displayed markdown!</p>
+			</div>
+			<div class="feature__item">
+				<h3 class="section__title">Pure HTML Configuration</h3>
+				<p>No Javascript required! Just edit the attributes on the md-tag and it will automatically update.</p>
+			</div>
+		</div>
+		<div class="callout">
+			<p>Read our documentation for advanced keybindings and customization</p>
+			<a href="docs.html" class="button--primary">Documentation</a>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+	<script>
+		hljs.initHighlightingOnLoad();
+	</script>
+	<script src="./scripts/global.js"></script>
+</body>
+</html>

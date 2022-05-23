@@ -4,7 +4,7 @@
 
 
 - [ ] Fetch and load newest version of markdown parsers.
-- [ ] Detect proper load method - on body etc. 
+- [X] Detect proper load method - on body etc. 
 - [ ] Add Github Syntax Using Showdown (No API Key Needed)
      - [ ] Emoji Support For Github Syntax
      - [ ] Decoding Fix For HTML
