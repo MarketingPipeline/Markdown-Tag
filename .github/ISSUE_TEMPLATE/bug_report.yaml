@@ -41,6 +41,6 @@ body:
   - type: textarea
     id: logs
     attributes:
-      label: Relevant log output
+      label: Code to produce this issue.
       description: Please copy and paste any relevant code to re-produce this issue. And the version of the browser you are using. 
       render: shell
