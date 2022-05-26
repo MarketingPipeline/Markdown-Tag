@@ -84,29 +84,52 @@ const HTMLParsedElement = (() => {
 	return HTMLParsedElement.withParsedCallback(HTMLParsedElement);
 })();
 
-// WIP: Extend BuiltIn Element to prevent script injection
-// const ClassMixin = (baseClass, ...mixins) => {
-//     class base extends baseClass {
-//         constructor (...args) {
-//             super(...args);
-//             mixins.forEach((mixin) => {
-//                 copyProps(this,(new mixin));
-//             });
+// function interseptElementProperty(object, property, callback, delay = 0) {
+//     let ownObjectProto = Object.getPrototypeOf(object);
+//     if (!object[property]) {
+//         console.error(property + " is not a property of " + object.toString());
+//         return;
+//     }
+
+//     while (!Object.getOwnPropertyDescriptor(ownObjectProto, property)) {
+//         ownObjectProto = Object.getPrototypeOf(ownObjectProto);
+//     }
+
+//     const ownProperty = Object.getOwnPropertyDescriptor(ownObjectProto, property);
+//     Object.defineProperty(object, property, {
+//         get: function () {
+//             console.log('access gettter');
+//             return ownProperty.get.call(this);
+//         },
+//         set: function (val) {
+// 			if (typeof callback == "function") {
+// 				setTimeout(callback.bind(this, oldValue, newValue), delay);
+// 			}
+//             return ownProperty.set.call(this, val);
 //         }
+//     })
+// }
+
+
+// function observeElement(element, property, callback, delay = 0) {
+//     let elementPrototype = Object.getPrototypeOf(element);
+//     if (elementPrototype.hasOwnProperty(property)) {
+//         let descriptor = Object.getOwnPropertyDescriptor(elementPrototype, property);
+//         Object.defineProperty(element, property, {
+//             get: function() {
+//                 return descriptor.get.apply(this, arguments);
+//             },
+//             set: function () {
+//                 let oldValue = this[property];
+//                 descriptor.set.apply(this, arguments);
+//                 let newValue = this[property];
+//                 if (typeof callback == "function") {
+//                     setTimeout(callback.bind(this, oldValue, newValue), delay);
+//                 }
+//                 return newValue;
+//             }
+//         });
 //     }
-//     let copyProps = (target, source) => {  // this function copies all properties and symbols, filtering out some special ones
-//         Object.getOwnPropertyNames(source)
-//               .concat(Object.getOwnPropertySymbols(source))
-//               .forEach((prop) => {
-//                  if (!prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/))
-//                     Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop));
-//                })
-//     }
-//     mixins.forEach((mixin) => { // outside contructor() to allow aggregation(A,B,C).staticFunction() to be called etc.
-//         copyProps(base.prototype, mixin.prototype);
-//         copyProps(base, mixin);
-//     });
-//     return base;
 // }
 
 /**
@@ -116,8 +139,11 @@ const HTMLParsedElement = (() => {
 
 function mdt_wc_init() {
 	class MDTag extends HTMLParsedElement {// ClassMixin(HTMLTextAreaElement, HTMLParsedElement) WIP: Extend BuiltIn Element to prevent script injection
+		#componentID
 		constructor() {
 			super();
+			this.#componentID = `MDTAG-${Date.now()}${Math.floor(Math.random() * 999) + 1}`
+			//this.componentID = `${Date.now()}${Math.floor(Math.random() * 999) + 1}`
 			this.generated = false
 			this.defaultFlavor = "showdown"
 			this.defaultParserRoot = "./"
@@ -128,6 +154,9 @@ function mdt_wc_init() {
 				"showdown"
 			]
 
+			this.logRegister = []
+			this.debugger = null
+
 			this.shadow = this.attachShadow({mode: 'open'});
 			this.headID = `md-tag-head-${Date.now()}${Math.floor(Math.random() * 999) + 1}`
 
@@ -137,14 +166,37 @@ function mdt_wc_init() {
 			this.contentObserver = null
 		}
 
-		get parserRoot() {
-			return this.hasAttribute("parser_root") ? this.getAttribute("parser_root") : this.defaultParserRoot;
+		get componentID() {
+			return this.#componentID
 		}
 
-		set parserRoot(val) {
-			if (val && typeof(val) === "string") {
-				this.setAttribute("parser_root", val);
-			} else this.setAttribute("parser_root", this.defaultParserRoot)
+		static get version() {
+			return "1.0.0"
+		}
+
+		get shouldDebug() {
+			const attr = this.getAttribute("debug")
+			return this.hasAttribute("debug") 
+				? (typeof(attr) === "boolean" || typeof(attr) === "string" && ["true", "false", true, false].includes(attr))
+					? (attr == "true")
+					: false
+				: false;
+		}
+
+		set shouldDebug(val) {
+			if (val && typeof(val) === "string" || typeof(val) === "boolean") {
+				if (typeof(val) === "boolean" || typeof(val) === "string" && ["true", "false", true, false].includes(val)) {
+					if (window?.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
+						this._initDebugger()
+						// if (this.debugger) {
+						// 	if (!(this.debugger instanceof window.mdtag.webcomponent.debugger)) this.debugger = new window.mdtag.webcomponent.debugger()
+						// } else this.debugger = new window.mdtag.webcomponent.debugger()
+
+						this.setAttribute("debug", val);
+						if (this.shouldDebug === true) this.debug("DEBUG Environment enabled.")
+					} else throw new Error(`[${this.componentID}] Could not initialize debug: MarkdownTag Debugger not installed.`)
+				} else this.setAttribute("debug", false);
+			} else this.setAttribute("debug", false);
 		}
 
 		get flavor() {
@@ -159,14 +211,14 @@ function mdt_wc_init() {
 			} else this.setAttribute("flavor", this.defaultFlavor);
 		}
 
-		get raw() {
+		get input() {
 			const contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
 			if (contentDiv) {
 				return contentDiv.innerHTML
 			}
 		}
 
-		set raw(val) {
+		set input(val) {
 			const contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
 			if (contentDiv) {
 				contentDiv.innerHTML = val
@@ -175,30 +227,130 @@ function mdt_wc_init() {
 			}
 		}
 
+		get parserRoot() {
+			return this.hasAttribute("parser_root") ? this.getAttribute("parser_root") : this.defaultParserRoot;
+		}
+
+		set parserRoot(val) {
+			if (val && typeof(val) === "string") {
+				this.setAttribute("parser_root", val);
+			} else this.setAttribute("parser_root", this.defaultParserRoot)
+		}
+
+		setInput(val) {
+			const contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
+			if (contentDiv) {
+				contentDiv.innerHTML = val
+				this.generateMarkdown()
+				return;
+			}
+		}
+
+		debug(...args) {
+			if (this.shouldDebug === true) {
+				if (window.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
+					this._initDebugger()
+					this.debugger.log(`[${this.componentID}]`, ...args)
+				} else throw new Error(`[${this.componentID}] Could not log debug message: MarkdownTag Debugger not installed.`)
+				// if (!this.logRegister || !Array.isArray(this.logRegister)) this.logRegister = []
+				// this.logRegister.push({ timestamp: Date.now(), args })
+				// console.log.bind(console).apply(this, args)
+			}
+		}
+
+		getLogs(clipboard) {
+			if (this.shouldDebug === true) {
+				if (window.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
+					this._initDebugger()
+
+					const logs = this.debugger.getLogs()
+					if (clipboard) {
+						console.log("Click anywhere outside of the Devtools within 3 seconds...")
+						setTimeout(() => this.debugger.copyTextToClipboard(logs), 3000)
+					}
+					else return logs
+				} else throw new Error(`[${this.componentID}] Could not get loggers: MarkdownTag Debugger not installed.`)
+			}
+		}
+
 		addCss(url) {
+			this.debug("[EVENT_METHOD] [HEAD] [aC] addCss")
+			this.debug("[EVENT_METHOD] [APPLY] [aC] Querying Shadow DOM head...")
 			const head = this.shadow.querySelector(`#${this.headID}`)
+
+			this.debug("[EVENT_METHOD] [APPLY] [aC] Creating LINK element...")
 			const link = document.createElement("link");
-			
 			link.id = `md-style-${Date.now()}${Math.floor(Math.random() * 999) + 1}`
 			link.type = "text/css";
 			link.rel = "stylesheet";
 			link.href = url;
-		  
+			
+			this.debug("[EVENT_METHOD] [APPLY] [aC] Appending LINK element to Shadow DOM head...")
 			head.appendChild(link);
+			this.debug("[EVENT_METHOD] [APPLY] [aC] Finished")
 		}
 
 		assertStyleSheet(url) {
+			this.debug("[EVENT_METHOD] [HEAD] [aSS] assertStyleSheet")
 			const ss = this.shadow.styleSheets
 			for (let i = 0, max = ss.length; i < max; i++) {
-				if (ss[i].href === url) return true;
+				if (ss[i].href === url) {
+					this.debug("[EVENT_METHOD] [APPLY] [aSS] Finished")
+					return true;
+				}
 			}
 
+			this.debug("[EVENT_METHOD] [APPLY] [aSS] Finished")
 			return false
 		}
 
-		addJs(url) {
-			return new Promise((resolve, reject) => {
+		async doesFileExist(url) {
+			this.debug("[EVENT_METHOD] [HEAD] [dFE] doesFileExist")
+			return new Promise(async (resolve, reject) => {
+				if (!url) {
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] File path not provided. Skipping...")
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] Finished")
+					return resolve(false);
+				}
+
 				try {
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] Asserting file path validity...")
+					const absPath = new URL(url, window.location.href)
+					
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] File path is valid. Contacting server for file...")
+					const res = await fetch(absPath, { method: "HEAD", mode: "no-cors" }).catch(e => {
+						this.debug("[EVENT_METHOD] [APPLY] [dFE] Finished")
+						resolve(false)
+					})
+					// .then((response) => {
+					// 	const contenttype = response.headers.get("content-type");
+					// 	console.log("Content Type (FETCH): ", contenttype);
+					// })
+					
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] Server responded. Resolving.")
+					if (res) return resolve(res?.status !== 200)
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] Finished")
+				} catch(e) {
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] Could not ensure file existence:", e)
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] Finished")
+					resolve(false)
+				}
+			})
+		}
+
+		async addJs(url) {
+			this.debug("[EVENT_METHOD] [HEAD] [aJ] addJs")
+			return new Promise(async (resolve, reject) => {
+				try {
+					this.debug("[EVENT_METHOD] [APPLY] [aJ] Asserting file existence...")
+					const doesFileExist = await this.doesFileExist(url)
+					if (!doesFileExist) {
+						this.debug("[EVENT_METHOD] [APPLY] [aJ] File does not exist. Skipping.")
+						this.debug("[EVENT_METHOD] [APPLY] [aJ] Finished")
+						return;
+					}//throw new Error("Does not exist")
+
+					this.debug("[EVENT_METHOD] [APPLY] [aJ] Generating Script Tag...")
 					const head = document.head;
 					const script = document.createElement("script");
 					
@@ -207,94 +359,163 @@ function mdt_wc_init() {
 					script.src = url;
 
 					script.addEventListener("load", () => {
-						resolve()
+						this.debug("[EVENT_METHOD] [APPLY] [aJ] Script successfully loaded.")
+						this.debug("[EVENT_METHOD] [APPLY] [aJ] Finished")
+						resolve(true)
 					})
 				
+					this.debug("[EVENT_METHOD] [APPLY] [aJ] Appending script to Document's head...")
 					head.appendChild(script);
 				} catch(e) {
+					this.debug("[EVENT_METHOD] [APPLY] [aJ] Could not add Script:", e)
+					this.debug("[EVENT_METHOD] [APPLY] [aJ] Finished")
 					reject(e)
 				}
 			})
 		}
 
 		removeScriptTagWithURL(url) {
+			this.debug("[EVENT_METHOD] [HEAD] [rSTWU] removeScriptTagWithURL")
+			this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Querying script reference...")
+
 			const head = document.head;
 			const script = document.querySelector(`script[src="${url}"]`)
 
 			if (script) {
+				this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Script reference queried. Removing script...")
 				head.removeChild(script)
+				this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Finished")
 				return true
-			} else return false
+			} else {
+				this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Could not get script reference.")
+				this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Finished")
+				return false
+			}
 		}
 
 		async ensureMarkdownParser(parser) {
+			this.debug("[EVENT_METHOD] [APPLY] [eMP] ensureMarkdownParser with arguments", [...arguments])
+			if (this.shouldDebug && !parser) this.debug("[EVENT_METHOD] [APPLY] [eMP] Parser not provided. Skipping.")
+
 			if (parser) {
 				switch (parser) {
 					case "showdown": {
+						this.debug("[EVENT_METHOD] [APPLY] [eMP] Asserting parser 'SHOWDOWN's existence...")
 						if (!window.hasOwnProperty("showdown")) {
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] 'SHOWDOWN' does not exist.")
 							try {
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] Attempting to load local copy of 'SHOWDOWN'...")
 								await this.addJs(`${this.parserRoot.endsWith("/") ? this.parserRoot.slice(0, -1) : this.parserRoot}/showdown/showdown.min.js`).catch(e => { throw e })
 							} catch(e) {
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] Local copy of 'SHOWDOWN' does not exist. Attempting to download it from CDN...")
 								if (!window.hasOwnProperty("showdown")) {
 									await this.addJs("https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js")
-								} else return true
+								} else {
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
+									return true
+								}
 
 								if (!window.hasOwnProperty("showdown")) {
-									console.error(`Unable to load markdown parser "showdown": ${e}`)
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Unable to load markdown parser 'SHOWDOWN':", e)
+									console.error(`Unable to load markdown parser 'showdown': ${e}`)
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
 									return false
 								}
 							}
+						} else {
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] 'SHOWDOWN' already exists.")
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
+							return true
 						}
 						break;
 					}
 					case "commonmark": {
+						this.debug("[EVENT_METHOD] [APPLY] [eMP] Asserting parser 'COMMONMARK's existence...")
 						if (!window.hasOwnProperty("md")) {
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] 'COMMONMARK' does not exist.")
 							try {
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] Attempting to load local copy of 'COMMONMARK'...")
 								await this.addJs(`${this.parserRoot.endsWith("/") ? this.parserRoot.slice(0, -1) : this.parserRoot}/commonmark/markdown-it.min.js`).catch(e => { throw e })
 							} catch(e) {
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] Local copy of 'COMMONMARK' does not exist. Attempting to download it from CDN...")
 								if (!window.hasOwnProperty("md")) {
 									await this.addJs("https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js")
-								} else return true
+								} else {
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
+									return true
+								}
 
 								if (!window.hasOwnProperty("md")) {
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Unable to load markdown parser 'COMMONMARK':", e)
 									console.error(`Unable to load markdown parser "markdown-it": ${e}`)
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
 									return false
 								}
 							}
+						} else {
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] 'COMMONMARK' already exists.")
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
+							return true
 						}
 						break;
 					}
 					case "marked": {
+						this.debug("[EVENT_METHOD] [APPLY] [eMP] Asserting parser 'MARKED's existence...")
 						if (!window.hasOwnProperty("marked")) {
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] 'MARKED' does not exist.")
 							try {
 								await this.addJs(`${this.parserRoot.endsWith("/") ? this.parserRoot.slice(0, -1) : this.parserRoot}/marked/marked.min.js`).catch(e => { throw e })
 							} catch(e) {
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] Local copy of 'MARKED' does not exist. Attempting to download it from CDN...")
 								if (!window.hasOwnProperty("marked")) {
 									await this.addJs("https://cdn.jsdelivr.net/npm/marked/marked.min.js")
-								} else return true
+								} else {
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
+									return true
+								}
+
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] Unable to load markdown parser 'MARKED':", e)
 
 								if (!window.hasOwnProperty("marked")) {
 									console.error(`Unable to load markdown parser "marked": ${e}`)
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
 									return false
 								}
 							}
+						} else {
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] 'MARKED' already exists.")
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
+							return true
 						}
 						break;
 					}
 					case "DOMPurify": {
+						this.debug("[EVENT_METHOD] [APPLY] [eMP] Asserting parser 'DOMPurify's existence...")
 						if (!window.hasOwnProperty("DOMPurify")) {
 							try {
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] 'DOMPurify' does not exist.")
 								await this.addJs(`${this.parserRoot.endsWith("/") ? this.parserRoot.slice(0, -1) : this.parserRoot}/DOMPurify/purify.min.js`).catch(e => { throw e })
 							} catch(e) {
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] Local copy of 'DOMPurify' does not exist. Attempting to download it from CDN...")
 								if (!window.hasOwnProperty("DOMPurify")) {
 									await this.addJs("https://cdn.jsdelivr.net/npm/dompurify@2.3.8/dist/purify.min.js")
-								} else return true
+								} else {
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
+									return true
+								}
+
+								this.debug("[EVENT_METHOD] [APPLY] [eMP] Unable to load markdown parser 'DOMPurify':", e)
 
 								if (!window.hasOwnProperty("DOMPurify")) {
 									console.error(`Unable to load markdown parser addon "DOMPurify": ${e}`)
+									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
 									return false
 								}
 							}
+						} else {
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] 'DOMPurify' already exists.")
+							this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
+							return true
 						}
 						break;
 					}
@@ -303,11 +524,17 @@ function mdt_wc_init() {
 		}
 
 		sanitizeHTML(html) {
+			this.debug("[EVENT_METHOD] [HEAD] [sH] sanitizeHTML")
+
 			let sanitized = DOMPurify.sanitize(html)
+
+			this.debug("[EVENT_METHOD] [APPLY] [sH] Finished")
+
 			return sanitized
 		}
 
 		async generateMarkdown() {
+			this.debug("[EVENT_METHOD] [HEAD] [GM] generateMarkdown")
 			const flavor = this.flavor
 			let contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
 			let displayDiv = this.shadow.querySelector("div[md-tag-role='display']")
@@ -318,19 +545,49 @@ function mdt_wc_init() {
 
 			await this.ensureMarkdownParser("DOMPurify")
 
+			this.debug("[EVENT_METHOD] [APPLY] [GM] Attempting to parse Markdown")
 			switch (flavor) {
 				case "commonmark": {
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Markdown parser: COMMONMARK")
 					await this.ensureMarkdownParser("commonmark")
+
+					const sanitizedHTML = this.sanitizeHTML(contentDiv.innerText)
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Input prepared:", contentDiv.innerText)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitized HTML:", sanitizedHTML)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Generating markdown...")
+
 					const md = window.markdownit()
-					displayDiv.innerHTML = md.render(this.sanitizeHTML(contentDiv.innerHTML))
+					const parsed = md.render(sanitizedHTML)
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Generated Markdown:\n", parsed)
+
+					displayDiv.innerHTML = parsed
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Finished")
 					break;
 				}
 				case "marked": {
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Markdown parser: MARKED")
 					await this.ensureMarkdownParser("marked")
-            		displayDiv.innerHTML = window.marked.parse(this.sanitizeHTML(contentDiv.innerText))
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitizing input...")
+
+					const sanitizedHTML = this.sanitizeHTML(contentDiv.innerText)
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Input prepared:", contentDiv.innerText)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitized HTML:", sanitizedHTML)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Generating markdown...")
+
+            		const parsed = window.marked.parse(sanitizedHTML)
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Generated Markdown:\n", parsed)
+
+					displayDiv.innerHTML = parsed
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Finished")
 					break;
 				}
 				case "github": {
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Markdown parser: SHOWDOWN + GITHUB CSS")
 					const css = "https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css"
 					if (!this.assertStyleSheet(css)) this.addCss(css)
 					await this.ensureMarkdownParser("showdown")
@@ -343,15 +600,30 @@ function mdt_wc_init() {
 					converter.setOption('ghMentions', 'true');
 					converter.setOption('simplifiedAutoLink', 'true');
 
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitizing input...")
+
+					const sanitizedHTML = this.sanitizeHTML(contentDiv.innerText)
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Input prepared:", contentDiv.innerText)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitized HTML:", sanitizedHTML)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Generating markdown...")
+
+					const parsed = converter.makeHtml(sanitizedHTML)
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Applying Github CSS...")
 					const githubMDTag = document.createElement("github-md")
-					githubMDTag.innerHTML = converter.makeHtml(this.sanitizeHTML(contentDiv.innerText))
+					githubMDTag.innerHTML = parsed
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Generated Markdown:\n", parsed)
 
 					displayDiv.innerHTML = ""
 					displayDiv.appendChild(githubMDTag)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Finished")
 					break;
 				}
 				case "showdown":
 				default: {
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Markdown parser: SHOWDOWN")
 					await this.ensureMarkdownParser("showdown")
 
 					const converter = new window.showdown.Converter()
@@ -362,22 +634,53 @@ function mdt_wc_init() {
 					converter.setOption('ghMentions', 'true');
 					converter.setOption('simplifiedAutoLink', 'true');
 
-					displayDiv.innerHTML = converter.makeHtml(this.sanitizeHTML(contentDiv.innerText))
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitizing input...")
+
+					const sanitizedHTML = this.sanitizeHTML(contentDiv.innerText)
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Input prepared:", contentDiv.innerText)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitized HTML:", sanitizedHTML)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Generating markdown...")
+
+					const parsed = converter.makeHtml(sanitizedHTML)
+
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Generated Markdown:\n", parsed)
+
+					displayDiv.innerHTML = parsed
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Finished")
 				}
 			}
 		}
 
 		generateFields() {
+			this.debug("[EVENT_METHOD] [HEAD] [GF] generateFields")
+
+			const inputElement = this.querySelector("textarea")
+			const _mainContentDiv = this.querySelector("textarea[md-tag-role='input']")
 			const _contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
 			const _displayDiv = this.shadow.querySelector("div[md-tag-role='display']")
 
-			if (_contentDiv && _displayDiv) return;
+			if (_contentDiv && _displayDiv && _mainContentDiv) {
+				this.debug("[EVENT_METHOD] [APPLY] [GF] Fields already exist.")
+				this.debug("[EVENT_METHOD] [APPLY] [GF] Finished")
+				return;
+			}
+
+			let mainContentDiv = document.createElement("textarea")
+			if (!_mainContentDiv) {
+				this.inputElemID = `md-script-${Date.now()}${Math.floor(Math.random() * 999) + 1}`
+				mainContentDiv.id = this.inputElemID
+				mainContentDiv.setAttribute("md-tag-role", "input")
+				mainContentDiv.setAttribute("name", "md-tag-input")
+				mainContentDiv.style.display = "none"
+				mainContentDiv.innerHTML = this.generated ? "" : inputElement.innerHTML || ""//this.innerHTML
+			}
 
 			let contentDiv = document.createElement("div")
 			if (!_contentDiv) {
 				contentDiv.setAttribute("md-tag-role", "raw")
 				contentDiv.style.display = "none"
-				contentDiv.innerHTML = _contentDiv?.innerHTML || this.innerHTML
+				contentDiv.innerHTML = mainContentDiv.innerHTML || ""//this.innerHTML
 			}
 			
 			let displayDiv = document.createElement("div")
@@ -386,28 +689,70 @@ function mdt_wc_init() {
 				displayDiv.style.display = "block"
 			}
 
+			if (!_mainContentDiv) {
+				this.innerHTML = ""
+				this.appendChild(mainContentDiv)
+			}
 			if (!_contentDiv) this.shadow.appendChild(contentDiv)
 			if (!_displayDiv) this.shadow.appendChild(displayDiv)
+			this.debug("[EVENT_METHOD] [APPLY] [GF] Finished")
 		}
 
 		// Spec-defined Methods
 
 		parsedCallback() {
+			this.debug("[EVENT_METHOD] [HEAD] [PC] parsedCallback")
+			this.generateFields()
+
+			// const inputElement = this.querySelector("textarea[md-tag-role='input']")
+			// this.contentObserver = new MutationObserver((mutations, observer) => {
+			// 	console.log("MUTATED")
+			// 	this.input = inputElement.innerHTML//this.innerHTML
+			// });
+
+			// console.log(this.innerHTML)
+			// console.log(inputElement)
+
+			// this.contentObserver.observe(inputElement, {
+			// 	characterData: true,
+  			// 	subtree: true
+			// });
+
 			this.contentObserver = new MutationObserver((mutations, observer) => {
-				this.raw = this.innerHTML
+				this.debug("[EVENT] [HEAD] [CO] contentObserver")
+				// Array.from(mutations).forEach(mutation => {
+				// 	console.log("MUTATION:", mutation.target.parentElement.id, mutation.target.id, inputElement.id)
+				// 	if (mutation.target.id === inputElement.id || mutation.target.parentElement.id === inputElement.id) {
+				// 		console.log("INPUT")
+				// 		this.input = inputElement.innerHTML
+				// 		// Array.from(mutation.addedNodes).forEach(node => {
+				// 		// 	console.log("INPUT", node)
+				// 		// });
+				// 	}
+				// });
+				const input = this.querySelector("textarea")
+				if (!input) this.generateFields()
+
+				this.input = input.innerHTML
+				this.debug("[EVENT_METHOD] [APPLY] [CO] Finished")
+				//this.input = inputElement.innerHTML//this.innerHTML
 			});
 
 			this.contentObserver.observe(this, {
+				// attributes: true,
 				characterData: true,
-  				subtree: true
+				childList: true, 
+				subtree: true
 			});
 
-			this.generateFields()
 			this.generateMarkdown()
 			this.generated = true
+			this.debug("[EVENT_METHOD] [APPLY] [PC] Finished")
 		}
 
 		attributeChangedCallback(attrName, oldVal, newVal) {
+			//console.log("attributeChangedCallback CALLED")
+			this.debug("[EVENT_METHOD] [HEAD] [aCC] attributeChangedCallback")
 			if (!this.generated) return;
 			if (oldVal == newVal) return;
 
@@ -418,16 +763,36 @@ function mdt_wc_init() {
 					break;
 				}
 			}
+
+			this.debug("[EVENT_METHOD] [APPLY] [aCC] Finished")
 		}
 
 		static get observedAttributes() {
 			return [
-				"flavor"
+				"flavor",
+				"parser_root"
 			];
+		}
+
+		// Helpers
+		_initDebugger() {
+			const init = () => {
+				const debug = new window.mdtag.webcomponent.debugger()
+				debug.componentID = this.componentID
+
+				this.debugger = debug
+			}
+
+			if (this.debugger) {
+				if (!(this.debugger instanceof window.mdtag.webcomponent.debugger)) init()
+			} else init()
 		}
 	}
 
-	window.customElements.define("md-tag", MDTag, { extends: "textarea" });
+	if (!window.mdtag) window.mdtag = {}
+	if (!window.mdtag.webcomponent) window.mdtag.webcomponent = {}
+	if (!window.mdtag.webcomponent.MDTag) window.mdtag.webcomponent.MDTag = MDTag
+	window.customElements.define("md-tag", MDTag);
 }
 
 mdt_wc_init()
