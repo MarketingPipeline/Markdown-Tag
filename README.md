@@ -7,87 +7,112 @@
                                                                      
 
 
-   <p align="center">
-    The easiest way to add Markdown support to your website!
-  
-  <br>
-  <small> <b><i>Show your support!</i> </b></small>
-  <br>
-   <a href="https://github.com/MarketingPipeline/Markdown-Tag">
-    <img title="Star on GitHub" src="https://img.shields.io/github/stars/MarketingPipeline/Markdown-Tag.svg?style=social&label=Star">
-  </a>
-  <a href="https://github.com/MarketingPipeline/Markdown-Tag/fork">
-    <img title="Fork on GitHub" src="https://img.shields.io/github/forks/MarketingPipeline/Markdown-Tag.svg?style=social&label=Fork">
-  </a>
-   </p>  
+<p align="center">
+	The easiest way to add Markdown support to your website!
+  	<br/>
+	<small> <b><i>Show your support!</i></b> </small>
+	<br/>
+	<a href="https://github.com/MarketingPipeline/Markdown-Tag">
+		<img title="Star on GitHub" src="https://img.shields.io/github/stars/MarketingPipeline/Markdown-Tag.svg?style=social&label=Star">
+	</a>
+	<a href="https://github.com/MarketingPipeline/Markdown-Tag/fork">
+		<img title="Fork on GitHub" src="https://img.shields.io/github/forks/MarketingPipeline/Markdown-Tag.svg?style=social&label=Fork">
+	</a>
+</p>  
 
 
-
-
-
+## Documentation
+You can view the Documentation for Markdown Tag [here](https://marketingpipeline.github.io/Markdown-Tag/docs/landing) or by viewing the html file at `docs/landing`.
 ## Example and usage
-
-You can view a demo of Markdown Tag in use [here.](https://marketingpipeline.github.io/Markdown-Tag)
-
-
-How to use <b><i>Markdown Tag</b></i>:
-
-  Add support to any website to use markdown ANYWHERE with a simple tag! Like so -
-
-            <md>
-             # Markdown Support
-               Awesomeness
-             </md>
+You can view a demo of Markdown Tag in use [here](https://marketingpipeline.github.io/Markdown-Tag).
 
 
+### Instalation
+Include this [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-wc.js) anywhere in your HTML document.
 
-   include this [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag.js) at the <b>bottom</b> of your HTML document.
-         
-    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script> 
+```html    
+<script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-wc.js"></script>
+```
+### How to use <b><i>Markdown Tag</b></i>:  
+Add support to any website to use markdown ANYWHERE with a simple tag! Like so -
 
+```html
+    <md-tag>
+# Markdown Support
+Awesomeness
+	</md-tag>
+```
 
+> As of v1.0.0, indentation is interpreted, and as such, the content of the HTML element is required to have no indentation.
 
-         
+### How to use <b><i>Markdown Tag</b></i> with <b>GitHub Styling</b>:
 
-How to use <b><i>Markdown Tag</b></i> with <b>GitHub Styling</b>:
-
-Instead of using a &lt;md> tag use
-   
-         <github-md># Example </github-md>
-
+Simply add the flavor you want to your tag:
+```html
+    <md-tag flavor="github">
+# Github Styled Markdown
+	</md-tag>
+```
 
 
 ## Syntax
 
-  This script uses Showdown to render Markdown - to read about the Showdown's Markdown syntax style click [here](https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax)
+### Showdown
+This script uses Showdown by default to render Markdown - to read about the Showdown's Markdown syntax style click [here](https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax)
 
-How to use <b><i>CommonMark Syntax</b></i>:
+### CommonMark
+If you wish to use [CommonMark](https://spec.commonmark.org/current/) syntax instead of Showdown's, simply modify the flavor of your HTML element:
+```html
+    <md-tag flavor="commonmark">
+# Github Styled Markdown
+	</md-tag>
+```
 
- If you wish to use [CommonMark](https://spec.commonmark.org/current/) syntax instead of Showdown's use this [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-commonmark.js) instead of the one above at the <b>bottom</b> of your HTML document.
-         
-    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-commonmark.js"></script> 
+### Marked
+If you wish to use [Marked](https://marked.js.org/) syntax instead of Showdown's, simply modify the flavor of your HTML element:
+```html
+    <md-tag flavor="marked">
+# Github Styled Markdown
+	</md-tag>
+```
 
-How to use <b><i>GitHub Flavored Markdown Syntax</b></i>:
- 
- If you wish to use [GitHub Flavored Markdown Spec](https://github.github.com/gfm/) syntax  use this [script](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/markdown-tag-Github.js) instead of the other script's above at the <b>bottom</b> of your HTML document. 
- 
-         
-       <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-GitHub.js"></script> 
-      
- 
-  <i>Note:</i> This options includes - Tables, GitHub Mentions & More.
+## XSS Vulnerabilities
+Last test: Sun May 29 2022 16:34:25 GMT+0100
+
+Last Results:
+```
+=============================================
+        XSS Pentesting Tester Results        
+   ---------------------------------------
+	----- < PAYLOAD > -----
+	  - Payload Key: BASIC
+	  - ✔ IMMUNE - Application is not vulnerable to this payload.
+	-----------------------
+	----- < PAYLOAD > -----
+	  - Payload Key: TAGBYPASS
+	  - ✔ IMMUNE - Application is not vulnerable to this payload.
+	-----------------------
+	----- < PAYLOAD > -----
+	  - Payload Key: BYPASS
+	  - ✔ IMMUNE - Application is not vulnerable to this payload.
+	-----------------------
+	----- < PAYLOAD > -----
+	  - Payload Key: ENCODED
+	  - ✔ IMMUNE - Application is not vulnerable to this payload.
+	-----------------------
+	----- < PAYLOAD > -----
+	  - Payload Key: POLYGLOTS
+	  - ✔ IMMUNE - Application is not vulnerable to this payload.
+	-----------------------
+=============================================
+```
              
           
 ## Known Issues 
 
 - [ ] GitHub Flavored Markdown Syntax is not correct 100%
 - [ ] GitHub Syntax Needs HTML Decoding Fixed 
-- [ ] XSS Vunerability Fix
-
-
-
-
-
+- [X] XSS Vunerability Fix
 
 
 ## Contributing ![GitHub](https://img.shields.io/github/contributors/MarketingPipeline/Markdown-Tag)

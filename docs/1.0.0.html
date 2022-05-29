@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MarkdownTag Documentation</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/styles/default.min.css"> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="./stylesheets/icons.css">
+    <link rel="stylesheet" href="./stylesheets/global.css">
+    <link rel="stylesheet" href="./stylesheets/docs.css">
+	<!-- Made by: DarkenLM -->
+  </head>
+  <body>
+    <div class="doc__bg"></div>
+    <nav class="header">
+      <h1 class="logo">MarkdownTag<span class="logo__thin">Docs</span></h1>
+      <ul class="menu">
+        <div class="menu__item toggle"><span></span></div>
+		<li class="menu__item">
+			<div class="dropdown">
+				<button class="dropbtn">v1.0.0</button>
+				<div class="dropdown-content">
+				<a href="#">v1.0.0</a>
+				</div>
+			</div>
+		</li>
+        <li class="menu__item"><a href="https://github.com/MarketingPipeline/Markdown-Tag" class="link link--dark"><i class="fa-brands fa-github"></i> Github</a></li>
+        <li class="menu__item"><a href="landing.html" class="link link--dark"><i class="fa fa-home"></i> Home</a></li>
+      </ul>
+    </nav>
+    <div class="wrapper">
+      <aside class="doc__nav">
+        <ul>
+          <li class="js-btn selected" id="nav_btn-get_started">Get Started</li>
+		  <li class="js-btn" id="nav_btn-config">Instalation</li>
+          <li class="js-btn" id="nav_btn-config">Configuration</li>
+		  <li class="js-btn" id="nav_btn-config">Usage</li>
+          <li class="js-btn" id="nav_btn-parsers">Parsers</li>
+          <li class="js-btn" id="nav_btn-pds">Parser Directory Structure</li>
+		  <li class="js-btn" id="nav_btn-pds">Debugger</li>
+		  <li class="js-btn" id="nav_btn-pds">API</li>
+		  <li class="js-btn" id="nav_btn-issues">Issues</li>
+        </ul>
+      </aside>
+      <article class="doc__content">
+        <section class="js-section">
+          <h3 class="section__title">Get Started</h3>
+          <p>Here's how to quickly install and setup MarkdownTag, no chit-chat involved.</p>
+		</section>
+
+		<section class="js-section doc-item" id="installation">
+          <h3 class="section__title">Installation</h3>
+		  <p>Add this line of code anywhere in your HTML page:</p>
+          <div class="code__block code__block--notabs">
+            <pre class="code code--block">
+              <code class="html">
+				&lt;script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-wc.js"&gt;&lt;/script&gt;
+              </code>
+            </pre>
+          </div>
+		  <p>And MarkdownTag should be ready to be used.</p>
+        </section>
+
+        <section class="js-section doc-item" id="configuration">
+          <h3 class="section__title">Configuration</h3>
+          <p>To configure MarkdownTag, edit the attributes <strong>on every md-tag you wish to configure.</strong></p>
+          <table id="customers">
+            <tr>
+              <th>Attribute</th>
+              <th>Meaning</th>
+              <th>Default</th>
+            </tr>
+            <tr>
+              <td>flavor</td>
+              <td>The parser to render the markdown with. Can be one of <code>showdown</code>, <code>github</code>, <code>commonmark</code> or <code>marked</code></td>
+              <td><code>showdown</code></td>
+            </tr>
+            <tr>
+              <td>parser_root</td>
+              <td>The root of the remote directory where the parsers are located, if any. Refer to <a href="#parser_directory_structure">Parser Directory Structure</a> for more information.</td>
+              <td><code>./</code></td>
+            </tr>
+			<tr>
+			  <td>debug</td>
+			  <td>Whenever the debugger is enabled for this particular MarkdownTag. Refer to <a href="#debugger">Debugger</a> for more information.</td>
+			  <td><code>false</code></td>
+			</tr>
+          </table>
+          <p>Editing any md-tag attribute will cause the md-tag to update the render.</p>
+          <hr />
+        </section>
+
+		<section class="js-section doc-item" id="usage">
+			<h3 class="section__title">Usage</h3>
+			<h4 class="section__title">On Load</h4>
+			<p>A MarkdownTag accepts an initial input, by simply placing it on the body of the element:</p>
+			<div class="code__block code__block--notabs">
+				<pre class="code code--block html">
+					<code>
+						&lt;md-tag&gt;
+							# Hello
+						&lt;/md-tag&gt;
+					</code>
+				</pre>
+				<div class="alert warning-alert">
+					<a class="icon"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" class="r-vq47rg r-1vzi8xi" style="height: 20px; width: 20px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1a.5.5 0 01.424.235l7.5 12A.5.5 0 0115.5 14H.5a.5.5 0 01-.424-.765l7.5-12A.5.5 0 018 1zM1.402 13h13.196L8 2.443 1.402 13z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 9.41V6.12h1v3.29h-1z" fill="currentColor"></path><path d="M8 11.67a.76.76 0 110-1.52.76.76 0 010 1.52z" fill="currentColor"></path></svg></a>
+					<h3><strong>Warning:</strong> The indentation of the content inside the element will not be stripped and will be interpreted by the Markdown Parsers.</h3>
+				</div>
+				<div class="alert danger-alert">
+					<a class="icon"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" class="r-1vzi8xi" style="height: 20px; width: 20px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 8.96V3.29h1v5.67h-1z" fill="currentColor"></path><path d="M8 12.5a1 1 0 110-2 1 1 0 010 2z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1a7 7 0 100 14A7 7 0 008 1zM0 8a8 8 0 1116 0A8 8 0 010 8z" fill="currentColor"></path></svg></a>
+					<div>
+						<h3><strong>Danger:</strong> The content inserted directly into the element will not be sanitized, due to limitations due to the DOM's functioning. To ensure safety of the input, use the API:</h3>
+						<pre class="code code--block">
+							<code class="javascript">
+								const element = document.querySelector("md-tag") // Use your preferred method of fetching your element
+								element.setInput("# Hello")
+							</code>
+						</pre>
+					</div>
+				</div>
+			</div>
+			<h4 class="section__title">Anytime</h4>
+			<p>A MarkdownTag's content can be modified at any point, by accessing the element's API:</p>
+			<div class="code__block code__block--notabs">
+				<pre class="code code--block">
+					<code class="javascript">
+						const element = document.querySelector("md-tag") // Use your preferred method of fetching your element
+						element.setInput("# Hello")
+					</code>
+				</pre>
+				<div class="alert info-alert">
+					<a class="icon"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" class="r-1ghhsy9 r-1vzi8xi" style="height: 20px; width: 20px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1a7 7 0 100 14A7 7 0 008 1zM0 8a8 8 0 1116 0A8 8 0 010 8z" fill="currentColor" class=""></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.5 6.37H8a.5.5 0 01.5.5v5.5h-1v-5h-1v-1z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.37h-3v-1h3v1z" fill="currentColor"></path><path d="M7.74 5.16a.77.77 0 01-.76-.77.76.76 0 011.52 0 .77.77 0 01-.76.77z" fill="currentColor"></path></svg></a>
+					<h3><strong>Info:</strong> See <a href="#api">API</a> for more information.
+				</div>
+			</div>
+		  </section>
+
+        <section class="js-section doc-item">
+          <h3 class="section__title">Parsers</h3>
+          <p>Currently, MarkdownTag supports three markdown parsers.</p>
+          <p><a href="https://github.com/showdownjs/showdown"><code>Showdown</code></a> - Markdown parser following the original rules as defined by John Gruber.</p>
+          <p><a href="https://github.com/markdown-it/markdown-it"><code>MarkdownIt</code></a> - Markdown parser following the rules as defined by the Commonmark spec.</p>
+		  <p><a href="https://github.com/markedjs/marked"><code>Marked</code></a> - Fast, Lightweight Markdown parser with minimalist parsing.</p>
+          <hr />
+        </section>
+
+        <section class="js-section doc-item" id="parser_directory_structure">
+          <h3 class="section__title">Parser Directory Structure</h3>
+          <p>In order for a custom parser version to be used, the following directory structure must be used:</p>
+          <div class="code__block code__block--notabs">
+            <pre class="code code--block">
+              <code class="plaintext">
+				parsers
+				├── showdown
+				│   └── showdown.min.js
+				├── commonmark
+				│   └── markdown-it.min.js
+				└── marked
+					└── marked.min.js
+              </code>
+            </pre>
+          </div>
+		  <hr />
+        </section>
+
+		<section class="js-section doc-item" id="debugger">
+			<h3 class="section__title">Debugger</h3>
+			<p>
+				Each MarkdownTag element comes packed with a debugger, which logs all information about the current MarkdownTag in real time.
+				<br/>
+				<div class="alert info-alert">
+					<a class="icon"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" class="r-1ghhsy9 r-1vzi8xi" style="height: 20px; width: 20px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1a7 7 0 100 14A7 7 0 008 1zM0 8a8 8 0 1116 0A8 8 0 010 8z" fill="currentColor" class=""></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.5 6.37H8a.5.5 0 01.5.5v5.5h-1v-5h-1v-1z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.37h-3v-1h3v1z" fill="currentColor"></path><path d="M7.74 5.16a.77.77 0 01-.76-.77.76.76 0 011.52 0 .77.77 0 01-.76.77z" fill="currentColor"></path></svg></a>
+					<h3><strong>Info:</strong> The Debugger requires a separated debug script accessible via adding this line <strong>BEFORE THE MAIN SCRIPT</strong>:
+					<br/>
+					<code>&lt;script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-wc-debug.js"&gt;&lt;/script&gt;</code></h3>
+				</div>
+				<div class="alert warning-alert">
+					<a class="icon"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" class="r-vq47rg r-1vzi8xi" style="height: 20px; width: 20px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1a.5.5 0 01.424.235l7.5 12A.5.5 0 0115.5 14H.5a.5.5 0 01-.424-.765l7.5-12A.5.5 0 018 1zM1.402 13h13.196L8 2.443 1.402 13z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 9.41V6.12h1v3.29h-1z" fill="currentColor"></path><path d="M8 11.67a.76.76 0 110-1.52.76.76 0 010 1.52z" fill="currentColor"></path></svg></a>
+					<h3><strong>Warning:</strong> The Debugger will only log messages triggered since the debugger was turned on.</h3>
+				</div>
+				<br/>
+				To turn on the Debugger, simply set the <code>debug</code> attribute on the element to <code>"true"</code> (See <a href="#configuration">Configuration</a>) or programically set the <code>debugEnabled</code> property to <code>true</code>.
+			</p>
+			<div class="padl-4" style="border-left: #002ff7 solid 2px;">
+				<h3 style="margin: 0;padding: 0;">Methods - See <a href="#api">API</a></h3>
+			</div>
+		</section>
+
+		<section class="js-section doc-item" id="api">
+			<h3 class="section__title">API</h3>
+			<p>
+				Each MarkdownTag element can be accessed programatically via an exposed API. To access the API, simply get a handle to the element using <code>getElementById</code>, <code>querySelector</code> or your preferred method of fetching elements.
+				<br/>
+				<div class="alert danger-alert">
+					<a class="icon"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" class="r-1vzi8xi" style="height: 20px; width: 20px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 8.96V3.29h1v5.67h-1z" fill="currentColor"></path><path d="M8 12.5a1 1 0 110-2 1 1 0 010 2z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1a7 7 0 100 14A7 7 0 008 1zM0 8a8 8 0 1116 0A8 8 0 010 8z" fill="currentColor"></path></svg></a>
+					<h3><strong>Warning:</strong> Only the documented API methods were tested. Any internal calls were not tested against being called from the outside and no support will be provided if you attempt to do so.</h3>
+				</div>
+			</p>
+			<div class="padl-4 accordion" style="border-left: #002ff7 solid 2px;">
+				<h3 class=" accordion__btn" style="margin: 0;padding: 0;padding-bottom: 10px;"><i class="accordion__icon clockwise fa-solid fa-caret-down" style="transform: rotate(-90deg)"></i> Methods</h3>
+				<div class="accordion__content">
+					<div class="padl-4" style="border-left: #009cf7 solid 2px;">
+						<h3 style="margin: 0;padding: 0;">Markdown</h3>
+					</div>
+					<div class="td-panel">
+						<h3 class="td-anchor-link">set<wbr>Input</h3>
+						<ul class="prop-def">
+							<li class="td-icon method">
+								set<wbr>Input<wbr>
+								<span class="tsd-signature-symbol">(</span><wbr>
+								value<span class="tsd-signature-symbol">: </span><wbr><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a><wbr>
+								<span class="tsd-signature-symbol">)</span><wbr>
+								<span class="tsd-signature-symbol">: </span><a class="td-prop-link td-ref">void</a>
+							</li>
+						</ul>
+						<ul class="td-description">
+							<li class="td-content">
+								Sets the input of the generator, and regenerates the Markdown based on the input.
+								<h4>Parameters</h4>
+								<ul class="td-parameters">
+									<li>
+										<h5>value: <span> <a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> - The Markdown to be used as input for the generator </span> </h5>
+									</li>
+								</ul>
+								<h4>Returns: <span><a class="td-prop-link td-primitive">void</a> </span></h4>
+							</li>
+						</ul>
+					</div>
+					<div class="td-panel">
+						<h3 class="td-anchor-link">set<wbr>Flavor</h3>
+						<ul class="prop-def">
+							<li class="td-icon method">
+								set<wbr>Flavor<wbr>
+								<span class="tsd-signature-symbol">(</span><wbr>
+								value<span class="tsd-signature-symbol">: </span><wbr><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a><wbr>
+								<span class="tsd-signature-symbol">)</span><wbr>
+								<span class="tsd-signature-symbol">: </span><a class="td-prop-link td-ref">void</a>
+							</li>
+						</ul>
+						<ul class="td-description">
+							<li class="td-content">
+								Sets the flavor of the generator, and regenerates the Markdown based on the currently stored input.
+								<h4>Parameters</h4>
+								<ul class="td-parameters">
+									<li>
+										<h5>value: <span><a class="td-prop-link td-primitive">'showdown'</a> <span>|</span> <a class="td-prop-link td-primitive">'commonmark'</a> | <a class="td-prop-link td-primitive">'marked'</a> | <a class="td-prop-link td-primitive">'DOMPurify'</a> - The flavor to be used to generate the markdown. </span> </h5>
+									</li>
+								</ul>
+								<h4>Returns: <span><a class="td-prop-link td-primitive">void</a> </span></h4>
+							</li>
+						</ul>
+					</div>
+					<div class="td-panel">
+						<h3 class="td-anchor-link">sanitize<wbr>HTML</h3>
+						<ul class="prop-def">
+							<li class="td-icon method">
+								sanitize<wbr>HTML<wbr>
+								<span class="tsd-signature-symbol">(</span><wbr>
+								value<span class="tsd-signature-symbol">: </span><wbr><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a><wbr>
+								<span class="tsd-signature-symbol">)</span><wbr>
+								<span class="tsd-signature-symbol">: </span><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+							</li>
+						</ul>
+						<ul class="td-description">
+							<li class="td-content">
+								Sanitizes HTML, removing any unsafe and XSS-prone HTML
+								<h4>Parameters</h4>
+								<ul class="td-parameters">
+									<li>
+										<h5>value: <span><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> -  A string containing unsafe HMTL </span> </h5>
+									</li>
+								</ul>
+								<h4>Returns: <span><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> - A string containing safe HTML </span></h4>
+							</li>
+						</ul>
+					</div>
+					<div class="padl-4" style="border-left: #9c00f7 solid 2px;">
+						<h3 style="margin: 0;padding: 0;">Debugger</h3>
+					</div>
+					<div class="td-panel">
+						<h3 class="td-anchor-link">debug</h3>
+						<ul class="prop-def">
+							<li class="td-icon method">
+								debug<wbr>
+								<span class="tsd-signature-symbol">(</span><wbr>
+								...args<span class="tsd-signature-symbol">: </span><wbr><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects">Any</a><wbr>
+								<span class="tsd-signature-symbol">)</span><wbr>
+								<span class="tsd-signature-symbol">: </span><a class="td-prop-link td-ref">void</a>
+							</li>
+						</ul>
+						<ul class="td-description">
+							<li class="td-content">
+								Registers a debug log into the internal debugger, it it exists.
+								<h4>Parameters</h4>
+								<ul class="td-parameters">
+									<li>
+										<h5>value: <span><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects">Any</a> - The data to log </span> </h5>
+									</li>
+								</ul>
+								<h4>Returns: <span><a class="td-prop-link td-primitive">void</a></span></h4>
+							</li>
+						</ul>
+					</div>
+					<div class="td-panel">
+						<h3 class="td-anchor-link">get<wbr>Logs</h3>
+						<ul class="prop-def">
+							<li class="td-icon method">
+								get<wbr>Logs<wbr>
+								<span class="tsd-signature-symbol">(</span><wbr>
+								clipboard<span class="tsd-signature-symbol">: </span><wbr><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a><wbr>
+								<span class="tsd-signature-symbol">)</span><wbr>
+								<span class="tsd-signature-symbol">: </span><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> <span>|</span> <a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>
+							</li>
+						</ul>
+						<ul class="td-description">
+							<li class="td-content">
+								Gathers, formats, and compiles the logs into a JSON string.
+								<h4>Parameters</h4>
+								<ul class="td-parameters">
+									<li>
+										<h5>clipboard: <span><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a> - Whenever the logs should be automatically copied to the user's clipboard. If set to <code>true</code>, function will return <code>true</code>, else function will return a JSON string containing the logs. </span> </h5>
+									</li>
+								</ul>
+								<h4>Returns: <span><a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> <span>|</span> <a class="td-prop-link td-primitive" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a> A JSON string containing the registered logs, or <code>true</code> if <code>clipboard</code> is set to true. </span></h4>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="js-section doc-item">
+		  <h3 class="section__title">Issues</h3>
+		  <p>Any issue you may find while using this package, please refer to <a href="https://github.com/MarketingPipeline/Markdown-Tag/issues">the Issues Panel on Github</a>.</p>
+		</section>
+      </article>
+    </div>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> -->
+    <script>hljs.highlightAll();</script>
+    <script src="./scripts/global.js"></script>
+  </body>
+</html>

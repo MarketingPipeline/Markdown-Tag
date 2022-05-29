@@ -84,66 +84,16 @@ const HTMLParsedElement = (() => {
 	return HTMLParsedElement.withParsedCallback(HTMLParsedElement);
 })();
 
-// function interseptElementProperty(object, property, callback, delay = 0) {
-//     let ownObjectProto = Object.getPrototypeOf(object);
-//     if (!object[property]) {
-//         console.error(property + " is not a property of " + object.toString());
-//         return;
-//     }
-
-//     while (!Object.getOwnPropertyDescriptor(ownObjectProto, property)) {
-//         ownObjectProto = Object.getPrototypeOf(ownObjectProto);
-//     }
-
-//     const ownProperty = Object.getOwnPropertyDescriptor(ownObjectProto, property);
-//     Object.defineProperty(object, property, {
-//         get: function () {
-//             console.log('access gettter');
-//             return ownProperty.get.call(this);
-//         },
-//         set: function (val) {
-// 			if (typeof callback == "function") {
-// 				setTimeout(callback.bind(this, oldValue, newValue), delay);
-// 			}
-//             return ownProperty.set.call(this, val);
-//         }
-//     })
-// }
-
-
-// function observeElement(element, property, callback, delay = 0) {
-//     let elementPrototype = Object.getPrototypeOf(element);
-//     if (elementPrototype.hasOwnProperty(property)) {
-//         let descriptor = Object.getOwnPropertyDescriptor(elementPrototype, property);
-//         Object.defineProperty(element, property, {
-//             get: function() {
-//                 return descriptor.get.apply(this, arguments);
-//             },
-//             set: function () {
-//                 let oldValue = this[property];
-//                 descriptor.set.apply(this, arguments);
-//                 let newValue = this[property];
-//                 if (typeof callback == "function") {
-//                     setTimeout(callback.bind(this, oldValue, newValue), delay);
-//                 }
-//                 return newValue;
-//             }
-//         });
-//     }
-// }
-
-/**
- * Markdown Tag Web Component Script
- * By: DarkenLM
- */
-
 function mdt_wc_init() {
-	class MDTag extends HTMLParsedElement {// ClassMixin(HTMLTextAreaElement, HTMLParsedElement) WIP: Extend BuiltIn Element to prevent script injection
+	const CONSOLE_LOG = window.console.log
+	class MDTag extends HTMLParsedElement {
 		#componentID
+		#input
 		constructor() {
 			super();
 			this.#componentID = `MDTAG-${Date.now()}${Math.floor(Math.random() * 999) + 1}`
-			//this.componentID = `${Date.now()}${Math.floor(Math.random() * 999) + 1}`
+			this.#input = null
+
 			this.generated = false
 			this.defaultFlavor = "showdown"
 			this.defaultParserRoot = "./"
@@ -174,7 +124,7 @@ function mdt_wc_init() {
 			return "1.0.0"
 		}
 
-		get shouldDebug() {
+		get debugEnabled() {
 			const attr = this.getAttribute("debug")
 			return this.hasAttribute("debug") 
 				? (typeof(attr) === "boolean" || typeof(attr) === "string" && ["true", "false", true, false].includes(attr))
@@ -183,48 +133,22 @@ function mdt_wc_init() {
 				: false;
 		}
 
-		set shouldDebug(val) {
+		set debugEnabled(val) {
 			if (val && typeof(val) === "string" || typeof(val) === "boolean") {
 				if (typeof(val) === "boolean" || typeof(val) === "string" && ["true", "false", true, false].includes(val)) {
-					if (window?.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
-						this._initDebugger()
-						// if (this.debugger) {
-						// 	if (!(this.debugger instanceof window.mdtag.webcomponent.debugger)) this.debugger = new window.mdtag.webcomponent.debugger()
-						// } else this.debugger = new window.mdtag.webcomponent.debugger()
+					this.setAttribute("debug", val);
 
-						this.setAttribute("debug", val);
-						if (this.shouldDebug === true) this.debug("DEBUG Environment enabled.")
-					} else throw new Error(`[${this.componentID}] Could not initialize debug: MarkdownTag Debugger not installed.`)
+					if (val == "true") {
+						if (window?.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
+							this._initDebugger()
+
+							this.debug("DEBUG Environment enabled.")
+						} else throw new Error(`[${this.componentID}] Could not initialize debug: MarkdownTag Debugger not installed.`)
+					} else {
+						this.debugger = null
+					}
 				} else this.setAttribute("debug", false);
 			} else this.setAttribute("debug", false);
-		}
-
-		get flavor() {
-			return this.hasAttribute("flavor") ? this.flavors.includes(this.getAttribute("flavor")) ? this.getAttribute("flavor") : this.defaultFlavor: this.defaultFlavor;
-		}
-
-		set flavor(val) {
-			if (val && typeof(val) === "string") {
-				if (this.flavors.includes(val)) {
-					this.setAttribute("flavor", val);
-				} else this.setAttribute("flavor", this.defaultFlavor);
-			} else this.setAttribute("flavor", this.defaultFlavor);
-		}
-
-		get input() {
-			const contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
-			if (contentDiv) {
-				return contentDiv.innerHTML
-			}
-		}
-
-		set input(val) {
-			const contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
-			if (contentDiv) {
-				contentDiv.innerHTML = val
-				this.generateMarkdown()
-				return;
-			}
 		}
 
 		get parserRoot() {
@@ -237,45 +161,76 @@ function mdt_wc_init() {
 			} else this.setAttribute("parser_root", this.defaultParserRoot)
 		}
 
-		setInput(val) {
-			const contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
-			if (contentDiv) {
-				contentDiv.innerHTML = val
-				this.generateMarkdown()
-				return;
-			}
+		get flavor() {
+			return this.hasAttribute("flavor") ? this.flavors.includes(this.getAttribute("flavor")) ? this.getAttribute("flavor") : this.defaultFlavor: this.defaultFlavor;
 		}
 
-		debug(...args) {
-			if (this.shouldDebug === true) {
-				if (window.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
-					this._initDebugger()
-					this.debugger.log(`[${this.componentID}]`, ...args)
-				} else throw new Error(`[${this.componentID}] Could not log debug message: MarkdownTag Debugger not installed.`)
-				// if (!this.logRegister || !Array.isArray(this.logRegister)) this.logRegister = []
-				// this.logRegister.push({ timestamp: Date.now(), args })
-				// console.log.bind(console).apply(this, args)
+		/**
+		 * Sets the flavor of the generator, and regenerates the Markdown based on the currently stored input.
+		 *
+		 * @param {'showdown' | 'commonmark' | 'marked' | 'DOMPurify'} val The flavor to be used to generate the markdown.
+		 * @memberof MDTag
+		 */
+		async setFlavor(val) {
+			this.debug("[EVENT_METHOD] [HEAD] [sF] setFlavor")
+			this.debug("[EVENT_METHOD] [APPLY] [sF] Setting flavor...")
+			if (val && typeof(val) === "string") {
+				if (this.flavors.includes(val)) {
+					this.setAttribute("flavor", val);
+
+					this.debug("[EVENT_METHOD] [APPLY] [sF] Ensuring generator fields...")
+					this.generateFields()
+
+					this.debug("[EVENT_METHOD] [APPLY] [sF] Generating markdown...")
+					await this.generateMarkdown()
+
+					this.debug("[EVENT_METHOD] [APPLY] [sF] Finished")
+				} else {
+					this.setAttribute("flavor", this.defaultFlavor);
+					this.debug("[EVENT_METHOD] [APPLY] [sF] Finished")
+				}
+			} else {
+				this.setAttribute("flavor", this.defaultFlavor);
+				this.debug("[EVENT_METHOD] [APPLY] [sF] Finished")
 			}
 		}
-
-		getLogs(clipboard) {
-			if (this.shouldDebug === true) {
-				if (window.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
-					this._initDebugger()
-
-					const logs = this.debugger.getLogs()
-					if (clipboard) {
-						console.log("Click anywhere outside of the Devtools within 3 seconds...")
-						setTimeout(() => this.debugger.copyTextToClipboard(logs), 3000)
-					}
-					else return logs
-				} else throw new Error(`[${this.componentID}] Could not get loggers: MarkdownTag Debugger not installed.`)
-			}
+		
+		get input() {
+			return this.#input
 		}
 
+		/**
+		 * Sets the input of the generator, and regenerates the Markdown based on the input.
+		 *
+		 * @param {string} val The Markdown to be used as input for the generator
+		 * @memberof MDTag
+		 */
+		async setInput(val) {
+			this.debug("[EVENT_METHOD] [HEAD] [sI] setInput")
+			this.debug("[EVENT_METHOD] [APPLY] [sI] Setting input...")
+			this.#input = val
+
+			this.debug("[EVENT_METHOD] [APPLY] [sI] Ensuring generator fields...")
+			this.generateFields()
+
+			this.debug("[EVENT_METHOD] [APPLY] [sI] Generating markdown...")
+			await this.generateMarkdown()
+
+			this.debug("[EVENT_METHOD] [APPLY] [sI] Finished")
+		}
+
+		// Markdown-related Methods
+
+		/**
+		 * Adds a stylesheet and loads it into the DOM
+		 *
+		 * @param {string} url The path of the stylesheet to load (url, or file path)
+		 * @memberof MDTag
+		 */
 		addCss(url) {
 			this.debug("[EVENT_METHOD] [HEAD] [aC] addCss")
 			this.debug("[EVENT_METHOD] [APPLY] [aC] Querying Shadow DOM head...")
+			const absPath = this._isPathAbsolute(url) ? url : new URL(url, window.location.href)
 			const head = this.shadow.querySelector(`#${this.headID}`)
 
 			this.debug("[EVENT_METHOD] [APPLY] [aC] Creating LINK element...")
@@ -283,18 +238,27 @@ function mdt_wc_init() {
 			link.id = `md-style-${Date.now()}${Math.floor(Math.random() * 999) + 1}`
 			link.type = "text/css";
 			link.rel = "stylesheet";
-			link.href = url;
+			link.href = absPath;
 			
 			this.debug("[EVENT_METHOD] [APPLY] [aC] Appending LINK element to Shadow DOM head...")
 			head.appendChild(link);
 			this.debug("[EVENT_METHOD] [APPLY] [aC] Finished")
 		}
 
+		/**
+		 * Asserts it a stylesheet is loaded into the DOM.
+		 *
+		 * @param {string} url The path of the stylesheet to assert it's existence
+		 * @return {boolean} 
+		 * @memberof MDTag
+		 */
 		assertStyleSheet(url) {
 			this.debug("[EVENT_METHOD] [HEAD] [aSS] assertStyleSheet")
+			const absPath = this._isPathAbsolute(url) ? url : new URL(url, window.location.href)
 			const ss = this.shadow.styleSheets
+
 			for (let i = 0, max = ss.length; i < max; i++) {
-				if (ss[i].href === url) {
+				if (ss[i].href === absPath) {
 					this.debug("[EVENT_METHOD] [APPLY] [aSS] Finished")
 					return true;
 				}
@@ -304,6 +268,13 @@ function mdt_wc_init() {
 			return false
 		}
 
+		/**
+		 * Asserts if file exists at the specified location.
+		 *
+		 * @param {string} url The path of the file to assert it's existence (url, or file path)
+		 * @return {Promise<boolean>} 
+		 * @memberof MDTag
+		 */
 		async doesFileExist(url) {
 			this.debug("[EVENT_METHOD] [HEAD] [dFE] doesFileExist")
 			return new Promise(async (resolve, reject) => {
@@ -315,17 +286,13 @@ function mdt_wc_init() {
 
 				try {
 					this.debug("[EVENT_METHOD] [APPLY] [dFE] Asserting file path validity...")
-					const absPath = new URL(url, window.location.href)
+					const absPath = this._isPathAbsolute(url) ? url : new URL(url, window.location.href)
 					
 					this.debug("[EVENT_METHOD] [APPLY] [dFE] File path is valid. Contacting server for file...")
 					const res = await fetch(absPath, { method: "HEAD", mode: "no-cors" }).catch(e => {
 						this.debug("[EVENT_METHOD] [APPLY] [dFE] Finished")
 						resolve(false)
 					})
-					// .then((response) => {
-					// 	const contenttype = response.headers.get("content-type");
-					// 	console.log("Content Type (FETCH): ", contenttype);
-					// })
 					
 					this.debug("[EVENT_METHOD] [APPLY] [dFE] Server responded. Resolving.")
 					if (res) return resolve(res?.status !== 200)
@@ -338,17 +305,30 @@ function mdt_wc_init() {
 			})
 		}
 
+		/**
+		 * Adds a script to the DOM.  
+		 * 
+		 * **WARNING:** After a script is loaded, it is not possible to unload it, as every variable loaded by
+		 * the script will be loaded on the global `window` object.
+		 *
+		 * @param {string} url The path of the script to load (url, or file path)
+		 * @return {Promise<boolean>} 
+		 * @memberof MDTag
+		 */
 		async addJs(url) {
 			this.debug("[EVENT_METHOD] [HEAD] [aJ] addJs")
 			return new Promise(async (resolve, reject) => {
 				try {
+					this.debug("[EVENT_METHOD] [APPLY] [aJ] Resolving file path...")
+					const absUrl = this._isPathAbsolute(url) ? url : new URL(url, window.location.href)
+
 					this.debug("[EVENT_METHOD] [APPLY] [aJ] Asserting file existence...")
-					const doesFileExist = await this.doesFileExist(url)
+					const doesFileExist = await this.doesFileExist(absUrl)
 					if (!doesFileExist) {
 						this.debug("[EVENT_METHOD] [APPLY] [aJ] File does not exist. Skipping.")
 						this.debug("[EVENT_METHOD] [APPLY] [aJ] Finished")
-						return;
-					}//throw new Error("Does not exist")
+						return resolve(false);
+					}
 
 					this.debug("[EVENT_METHOD] [APPLY] [aJ] Generating Script Tag...")
 					const head = document.head;
@@ -356,7 +336,7 @@ function mdt_wc_init() {
 					
 					script.id = `md-script-${Date.now()}${Math.floor(Math.random() * 999) + 1}`
 					script.type = "text/javascript";
-					script.src = url;
+					script.src = absUrl;
 
 					script.addEventListener("load", () => {
 						this.debug("[EVENT_METHOD] [APPLY] [aJ] Script successfully loaded.")
@@ -374,28 +354,16 @@ function mdt_wc_init() {
 			})
 		}
 
-		removeScriptTagWithURL(url) {
-			this.debug("[EVENT_METHOD] [HEAD] [rSTWU] removeScriptTagWithURL")
-			this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Querying script reference...")
-
-			const head = document.head;
-			const script = document.querySelector(`script[src="${url}"]`)
-
-			if (script) {
-				this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Script reference queried. Removing script...")
-				head.removeChild(script)
-				this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Finished")
-				return true
-			} else {
-				this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Could not get script reference.")
-				this.debug("[EVENT_METHOD] [APPLY] [rSTWU] Finished")
-				return false
-			}
-		}
-
+		/**
+		 * Ensures the existence of the specified parser, attempting to load a local copy or a remote copy from it's respective CDN.
+		 *
+		 * @param {'showdown' | 'commonmark' | 'marked' | 'DOMPurify'} parser The parser to ensure it's existence. One of 'showdown', 'commonmark', 'marked', 'DOMPurify'
+		 * @return {Promise<boolean>} 
+		 * @memberof MDTag
+		 */
 		async ensureMarkdownParser(parser) {
 			this.debug("[EVENT_METHOD] [APPLY] [eMP] ensureMarkdownParser with arguments", [...arguments])
-			if (this.shouldDebug && !parser) this.debug("[EVENT_METHOD] [APPLY] [eMP] Parser not provided. Skipping.")
+			if (this.debugEnabled && !parser) this.debug("[EVENT_METHOD] [APPLY] [eMP] Parser not provided. Skipping.")
 
 			if (parser) {
 				switch (parser) {
@@ -520,9 +488,16 @@ function mdt_wc_init() {
 						break;
 					}
 				}
-			}
+			} else return false
 		}
 
+		/**
+		 * Sanitizes HTML, removing any unsafe and XSS-prone HTML
+		 *
+		 * @param {string} html A string containing unsafe HMTL
+		 * @return {string} A string containing safe HTML
+		 * @memberof MDTag
+		 */
 		sanitizeHTML(html) {
 			this.debug("[EVENT_METHOD] [HEAD] [sH] sanitizeHTML")
 
@@ -533,15 +508,22 @@ function mdt_wc_init() {
 			return sanitized
 		}
 
+		/**
+		 * Generates vaild HTML from Markdown Syntax
+		 *
+		 * @memberof MDTag
+		 */
 		async generateMarkdown() {
 			this.debug("[EVENT_METHOD] [HEAD] [GM] generateMarkdown")
 			const flavor = this.flavor
-			let contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
+			let input = this.input
 			let displayDiv = this.shadow.querySelector("div[md-tag-role='display']")
 
-			if (!contentDiv || !displayDiv) this.generateFields()
-			contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
-			displayDiv = this.shadow.querySelector("div[md-tag-role='display']")
+			if (!input || !displayDiv) {
+				this.generateFields()
+				input = ""
+				displayDiv = this.shadow.querySelector("div[md-tag-role='display']")
+			}
 
 			await this.ensureMarkdownParser("DOMPurify")
 
@@ -551,9 +533,9 @@ function mdt_wc_init() {
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Markdown parser: COMMONMARK")
 					await this.ensureMarkdownParser("commonmark")
 
-					const sanitizedHTML = this.sanitizeHTML(contentDiv.innerText)
+					const sanitizedHTML = this.sanitizeHTML(input)
 
-					this.debug("[EVENT_METHOD] [APPLY] [GM] Input prepared:", contentDiv.innerText)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Prepared Input:", input)
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitized HTML:", sanitizedHTML)
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Generating markdown...")
 
@@ -572,9 +554,9 @@ function mdt_wc_init() {
 
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitizing input...")
 
-					const sanitizedHTML = this.sanitizeHTML(contentDiv.innerText)
+					const sanitizedHTML = this.sanitizeHTML(input)
 
-					this.debug("[EVENT_METHOD] [APPLY] [GM] Input prepared:", contentDiv.innerText)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Prepared Input:", input)
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitized HTML:", sanitizedHTML)
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Generating markdown...")
 
@@ -602,9 +584,9 @@ function mdt_wc_init() {
 
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitizing input...")
 
-					const sanitizedHTML = this.sanitizeHTML(contentDiv.innerText)
+					const sanitizedHTML = this.sanitizeHTML(input)
 
-					this.debug("[EVENT_METHOD] [APPLY] [GM] Input prepared:", contentDiv.innerText)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Prepared Input:", input)
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitized HTML:", sanitizedHTML)
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Generating markdown...")
 
@@ -636,9 +618,9 @@ function mdt_wc_init() {
 
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitizing input...")
 
-					const sanitizedHTML = this.sanitizeHTML(contentDiv.innerText)
+					const sanitizedHTML = this.sanitizeHTML(input)
 
-					this.debug("[EVENT_METHOD] [APPLY] [GM] Input prepared:", contentDiv.innerText)
+					this.debug("[EVENT_METHOD] [APPLY] [GM] Prepared Input:", input)
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Sanitized HTML:", sanitizedHTML)
 					this.debug("[EVENT_METHOD] [APPLY] [GM] Generating markdown...")
 
@@ -652,35 +634,20 @@ function mdt_wc_init() {
 			}
 		}
 
+		/**
+		 * Ensures existence of required Shadow DOM Fields
+		 *
+		 * @memberof MDTag
+		 */
 		generateFields() {
 			this.debug("[EVENT_METHOD] [HEAD] [GF] generateFields")
 
-			const inputElement = this.querySelector("textarea")
-			const _mainContentDiv = this.querySelector("textarea[md-tag-role='input']")
-			const _contentDiv = this.shadow.querySelector("div[md-tag-role='raw']")
 			const _displayDiv = this.shadow.querySelector("div[md-tag-role='display']")
 
-			if (_contentDiv && _displayDiv && _mainContentDiv) {
+			if (_displayDiv) {
 				this.debug("[EVENT_METHOD] [APPLY] [GF] Fields already exist.")
 				this.debug("[EVENT_METHOD] [APPLY] [GF] Finished")
 				return;
-			}
-
-			let mainContentDiv = document.createElement("textarea")
-			if (!_mainContentDiv) {
-				this.inputElemID = `md-script-${Date.now()}${Math.floor(Math.random() * 999) + 1}`
-				mainContentDiv.id = this.inputElemID
-				mainContentDiv.setAttribute("md-tag-role", "input")
-				mainContentDiv.setAttribute("name", "md-tag-input")
-				mainContentDiv.style.display = "none"
-				mainContentDiv.innerHTML = this.generated ? "" : inputElement.innerHTML || ""//this.innerHTML
-			}
-
-			let contentDiv = document.createElement("div")
-			if (!_contentDiv) {
-				contentDiv.setAttribute("md-tag-role", "raw")
-				contentDiv.style.display = "none"
-				contentDiv.innerHTML = mainContentDiv.innerHTML || ""//this.innerHTML
 			}
 			
 			let displayDiv = document.createElement("div")
@@ -689,53 +656,25 @@ function mdt_wc_init() {
 				displayDiv.style.display = "block"
 			}
 
-			if (!_mainContentDiv) {
-				this.innerHTML = ""
-				this.appendChild(mainContentDiv)
-			}
-			if (!_contentDiv) this.shadow.appendChild(contentDiv)
 			if (!_displayDiv) this.shadow.appendChild(displayDiv)
 			this.debug("[EVENT_METHOD] [APPLY] [GF] Finished")
 		}
 
 		// Spec-defined Methods
 
+		/**
+		 * Triggered once the element was parsed and loaded on the DOM Tree.
+		 *
+		 * @memberof MDTag
+		 */
 		parsedCallback() {
 			this.debug("[EVENT_METHOD] [HEAD] [PC] parsedCallback")
 			this.generateFields()
 
-			// const inputElement = this.querySelector("textarea[md-tag-role='input']")
-			// this.contentObserver = new MutationObserver((mutations, observer) => {
-			// 	console.log("MUTATED")
-			// 	this.input = inputElement.innerHTML//this.innerHTML
-			// });
-
-			// console.log(this.innerHTML)
-			// console.log(inputElement)
-
-			// this.contentObserver.observe(inputElement, {
-			// 	characterData: true,
-  			// 	subtree: true
-			// });
-
-			this.contentObserver = new MutationObserver((mutations, observer) => {
+			this.contentObserver = new MutationObserver(async (mutations, observer) => {
 				this.debug("[EVENT] [HEAD] [CO] contentObserver")
-				// Array.from(mutations).forEach(mutation => {
-				// 	console.log("MUTATION:", mutation.target.parentElement.id, mutation.target.id, inputElement.id)
-				// 	if (mutation.target.id === inputElement.id || mutation.target.parentElement.id === inputElement.id) {
-				// 		console.log("INPUT")
-				// 		this.input = inputElement.innerHTML
-				// 		// Array.from(mutation.addedNodes).forEach(node => {
-				// 		// 	console.log("INPUT", node)
-				// 		// });
-				// 	}
-				// });
-				const input = this.querySelector("textarea")
-				if (!input) this.generateFields()
-
-				this.input = input.innerHTML
+				await this.setInput(this.innerHTML)
 				this.debug("[EVENT_METHOD] [APPLY] [CO] Finished")
-				//this.input = inputElement.innerHTML//this.innerHTML
 			});
 
 			this.contentObserver.observe(this, {
@@ -745,37 +684,45 @@ function mdt_wc_init() {
 				subtree: true
 			});
 
-			this.generateMarkdown()
+			this.setInput(this.innerHTML)
 			this.generated = true
 			this.debug("[EVENT_METHOD] [APPLY] [PC] Finished")
 		}
 
-		attributeChangedCallback(attrName, oldVal, newVal) {
-			//console.log("attributeChangedCallback CALLED")
-			this.debug("[EVENT_METHOD] [HEAD] [aCC] attributeChangedCallback")
-			if (!this.generated) return;
-			if (oldVal == newVal) return;
+		// attributeChangedCallback(attrName, oldVal, newVal) {
+		// 	this.debug("[EVENT_METHOD] [HEAD] [aCC] attributeChangedCallback")
+		// 	if (!this.generated) return;
+		// 	if (oldVal == newVal) return;
 
-			switch (attrName) {
-				case "flavor": {
-					this.flavor = newVal
-					this.generateMarkdown()
-					break;
-				}
-			}
+		// 	switch (attrName) {
+		// 		case "flavor": {
+		// 			this.flavor = newVal
+		// 			this.generateMarkdown()
+		// 			break;
+		// 		}
+		// 	}
 
-			this.debug("[EVENT_METHOD] [APPLY] [aCC] Finished")
-		}
+		// 	this.debug("[EVENT_METHOD] [APPLY] [aCC] Finished")
+		// }
 
 		static get observedAttributes() {
 			return [
 				"flavor",
-				"parser_root"
+				"parser_root",
+				"debug"
 			];
 		}
 
-		// Helpers
+		// DEBUGGER
+
+		/**
+		 * Loads the debugger, if it exists.
+		 *
+		 * @memberof MDTag
+		 */
 		_initDebugger() {
+			if (!window?.mdtag?.webcomponent?.hasOwnProperty("debugger")) return;
+
 			const init = () => {
 				const debug = new window.mdtag.webcomponent.debugger()
 				debug.componentID = this.componentID
@@ -786,6 +733,57 @@ function mdt_wc_init() {
 			if (this.debugger) {
 				if (!(this.debugger instanceof window.mdtag.webcomponent.debugger)) init()
 			} else init()
+		}
+
+		/**
+		 * Registers a debug log into the internal debugger, it it exists.
+		 *
+		 * @param {*} args The data to log
+		 * @memberof MDTag
+		 */
+		debug(...args) {
+			if (this.debugEnabled === true) {
+				if (window.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
+					this._initDebugger()
+					this.debugger.log(`[${this.componentID}]`, ...args)
+				} else throw new Error(`[${this.componentID}] Could not log debug message: MarkdownTag Debugger not installed.`)
+			}
+		}
+
+		/**
+		 * Gathers, formats, and compiles the logs into a JSON string.
+		 *
+		 * @param {boolean} clipboard Whenever the logs should be automatically copied to the user's clipboard. If set to `true`, function will return `true`, else function will return a JSON string containing the logs.
+		 * @return {string | true} A JSON string containing the registered logs
+		 * @memberof MDTag
+		 */
+		getLogs(clipboard) {
+			if (this.debugEnabled === true) {
+				if (window.mdtag?.webcomponent?.hasOwnProperty("debugger")) {
+					this._initDebugger()
+
+					const logs = this.debugger.getLogs()
+					if (clipboard) {
+						console.log("Click anywhere outside of the Devtools within 3 seconds...")
+						setTimeout(() => this.debugger.copyTextToClipboard(logs), 3000)
+						return true;
+					}
+					else return logs
+				} else throw new Error(`[${this.componentID}] Could not get loggers: MarkdownTag Debugger not installed.`)
+			}
+		}
+
+		// Helpers
+
+		/**
+		 * Tests whenever the provided path is absolute
+		 *
+		 * @param {string} path
+		 * @return {boolean} 
+		 * @memberof MDTag
+		 */
+		_isPathAbsolute(path) {
+			return /^(?:\/|[a-z]+:\/\/)/.test(path);
 		}
 	}
 

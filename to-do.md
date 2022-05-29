@@ -1,5 +1,3 @@
-
-
 ## To-do  
 
 
@@ -10,7 +8,7 @@
      - [ ] Decoding Fix For HTML
      - [ ] GitHub Syntax Needs HTML Decoding Fixed 
      - [ ] Match GFM style 100%. 
-- [ ] XSS Vunerability Fix
+- [X] XSS Vunerability Fix
          
  ```javascript
        function decodeString(string) {

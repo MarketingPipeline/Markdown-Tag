@@ -417,9 +417,28 @@ function mdt_wc_debug_init() {
 	const { inspect } = makeInspect()
 
 	class MDTagDebugger {
-		constructor() {
+		constructor(overrides) {
 			this.componentID = null
 			this.logRegister = []
+			const colorify = {
+				byNum: (mess, fgNum, bgNum) => {
+					mess = mess || '';
+					fgNum = fgNum === undefined ? 31 : fgNum;
+					bgNum = bgNum === undefined ? 1 : bgNum; //47
+					return '\u001b[' + fgNum + 'm' + '\u001b[' + bgNum + 'm' + mess + '\u001b[0m'//'\u001b[39m\u001b[49m';
+				},
+				black: (mess, fgNum) => colorify.byNum(mess, 30, fgNum),
+				red: (mess, fgNum) => colorify.byNum(mess, 31, fgNum),
+				green: (mess, fgNum) => colorify.byNum(mess, 32, fgNum),
+				yellow: (mess, fgNum) => colorify.byNum(mess, 33, fgNum),
+				blue: (mess, fgNum) => colorify.byNum(mess, 34, fgNum),
+				magenta: (mess, fgNum) => colorify.byNum(mess, 35, fgNum),
+				cyan: (mess, fgNum) => colorify.byNum(mess, 36, fgNum),
+				white: (mess, fgNum) => colorify.byNum(mess, 37, fgNum)
+			};
+
+			this.colorify = colorify
+			this.overrides = overrides
 		}
 
 		static get version() {
@@ -428,8 +447,11 @@ function mdt_wc_debug_init() {
 
 		log(...args) {
 			if (!this.logRegister || !Array.isArray(this.logRegister)) this.logRegister = []
+
 			const ind = this.logRegister.push({ timestamp: Date.now(), args })
-			console.log.bind(console).apply(this, ["[MDTag Debugger]", ...args])
+			if (this.overrides?.logger) this.overrides?.logger.apply(this, ["[MDTag Debugger]", ...args])
+			else console.log.bind(console).apply(this, ["[MDTag Debugger]", ...args])
+			
 			return ind;
 		}
 

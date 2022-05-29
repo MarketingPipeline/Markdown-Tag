@@ -54,6 +54,68 @@ window.addEventListener("load", function () {
 			activePane.classList.add('active');
 		}
 	}
+
+	
+
+	let accordions = getAll(".accordion");
+	for (let i = 0; i < accordions.length; i++) {
+		let btn = accordions[i].querySelector(".accordion__btn")
+		let content = accordions[i].querySelector(".accordion__content")
+
+		btn.addEventListener("click", collapsable.bind(this, accordions[i], btn, content))
+		//accordions[i].addEventListener("click", collapsable);
+	}
+
+	function collapsable(accordion, btn, content, event) {
+		const icon = btn.querySelector(".accordion__icon")
+
+		if (content.style.maxHeight) {
+			closeAccordion(accordion);
+		} else {
+			accordions.forEach((accordion) => closeAccordion(accordion));
+			openAccordion(accordion);
+		}
+
+		if (icon) {
+			icon.classList.toggle("clockwise")
+			icon.classList.toggle("counterclockwise")
+
+			if (icon.classList.contains("clockwise")) icon.style.transform = "rotate(-90deg)"
+			else if (icon.classList.contains("counterclockwise")) icon.style.transform = "rotate(0deg)"
+		}
+	}
+
+	const openAccordion = (accordion) => {
+		const content = accordion.querySelector(".accordion__content");
+		accordion.classList.add("accordion__active");
+		content.style.maxHeight = content.scrollHeight + "px";
+	};
+
+	const closeAccordion = (accordion) => {
+		const content = accordion.querySelector(".accordion__content");
+		accordion.classList.remove("accordion__active");
+		content.style.maxHeight = null;
+	};
+
+
+
+	// let collapsables = getAll(".slideDown-btn");
+
+	// // bind click event to each tab container
+	// for (let i = 0; i < collapsables.length; i++) {
+	// 	collapsables[i].addEventListener("click", collapsable);
+	// 	// console.log(tab_menu, tab_menu.classList, tab_menu.classList.contains("function"))
+
+	// 	// if (tab_menu.classList.contains("function")) tab_menu.addEventListener("click", tabFunctionClick);
+	// 	// else tab_menu.addEventListener("click", tabClick);
+	// }
+
+	// function collapsable(event) {
+	// 	// let content = event.currentTarget.nextElementSibling
+	// 	// content.classList.toggle("ng-hide");
+	// 	let content = event.currentTarget.parentNode
+	// 	content.classList.toggle("ng-hide");
+	// }
 });
 
 //in page scrolling for documentaiton page

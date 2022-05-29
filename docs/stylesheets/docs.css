@@ -1,3 +1,9 @@
+:root {
+	--td-panel: #fff;
+	--td-panel-divider: #eee;
+	--td-color-text-aside: #707070;
+}
+
 html,
 body {
 	display: flex;
@@ -18,6 +24,12 @@ a {
 .wrapper {
 	display: flex;
 	flex-grow: 1;
+}
+
+/* Sections */
+.js-section.doc-item {
+	border-left: var(--accent-color) solid 1px;
+    padding-left: 10px;
 }
 
 /* logo */
@@ -55,6 +67,7 @@ a {
 .doc__nav {
 	flex-basis: 20%;
 	font-weight: 200;
+	margin-right: 20px;
 }
 
 .doc__nav ul {
@@ -122,4 +135,111 @@ a {
 	.doc__nav .selected:after {
 		display: none;
 	}
+}
+
+/* Collapsable */
+/* .collapsable {
+	overflow: hidden;
+	width: 350px;
+	height: 600px;
+	transition: width 600ms ease-out, height 600ms ease-out;
+}
+  
+.menu--collapsed {
+	width: 200px;
+	height: 60px;
+} */
+
+/* Panels */
+.td-panel {
+	margin: 20px 0;
+    padding: 20px;
+    background-color: var(--td-panel);
+    box-shadow: 0 0 4px rgb(0 0 0 / 25%);
+}
+.td-panel .td-anchor-link {
+	margin: 1.5em -20px 10px -20px;
+    padding: 0 20px 10px 20px;
+	margin-top: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.td-panel ul {
+	list-style-type: none;
+}
+
+.prop-def {
+	padding: 0;
+    margin: 0 0 1em 0;
+    /* border: 1px solid var(--td-panel-divider); */
+}
+
+.td-panel > .prop-def {
+    margin-left: -20px;
+    margin-right: -20px;
+    border-width: 1px 0;
+}
+
+.td-panel > .prop-def .td-icon {
+	padding: 10px;
+    padding-left: 40px;
+    margin: 0 0 1em 0;
+    border: 1px solid var(--td-panel-divider);
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+	font-size: 14px;
+    overflow-x: auto;
+}
+
+.td-panel ul.td-description {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+	margin-bottom: 0;
+    list-style: none;
+}
+
+.td-panel ul.td-description .td-content h4:first-child {
+	margin-bottom: 5px;
+}
+
+ul.td-parameters {
+    list-style: inside;
+    margin: 0;
+    padding-left: 20px;
+}
+
+ul.td-parameters li {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	white-space: pre-wrap;
+	vertical-align: middle;
+	line-height: 18px;
+}
+
+ul.td-parameters li h5 span {
+	font-weight: 600;
+}
+
+ul.td-parameters li * {
+	margin: 0;
+	font-size: 0.93em;
+}
+
+.td-prop-symbol {
+    color: var(--td-color-text-aside);
+    font-weight: normal;
+}
+
+.td-prop-link.td-primitive {
+	color: #9600ff;
+}
+
+.td-prop-link[href]:hover {
+    text-decoration: underline;
+}
+
+.td-prop-link.td-ref {
+	color: #0672de;
 }

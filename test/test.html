@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-	<script src="./markdown-tag-wc-debug.js"></script>
-    <script src="./markdown-tag-wc.js"></script>
+	<script src="../markdown-tag-wc-debug.js"></script>
+	<script src="./xss.js"></script>
+    <script src="../markdown-tag-wc.js"></script>
 </head>
 <body>
-    <md-tag id="showcase_md_tag" flavor="default" parser_root="./parsers">
-		<textarea>
+	<button id="start_btn">Click to start the XSS Testing (Check console)</button>
+    <md-tag id="test_md_tag" flavor="default" parser_root="../parsers" debug="true">
 ### Heading
 
 # H1
@@ -105,7 +106,7 @@ term
 
 # XSS Testing
 ### Vulnerable on load, due to being unable to purify the HTML before the DOM is loaded. Unavoidable.
-		</textarea>
 	</md-tag>
 </body>
+<script src="test.js"></script>
 </html>
