@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+h3 { 
+	/* font-family: Nunito, "Segoe UI", Arial, sans-serif;  */
+	font-family: Nunito, "Segoe UI", Arial, sans-serif;
+	font-size: 14px; 
+	font-style: normal; 
+	font-variant: normal; 
+	font-weight: 700; 
+	line-height: 15.4px; 
+}
+
+.alert {
+	/* width: 50%; */
+	margin: 20px;
+	padding: 15px;
+	position: relative;
+	border-radius: 5px;
+	box-shadow: 0 0 15px 5px #ccc;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+    justify-content: left;
+}
+
+.icon {
+	width: 48px;
+	align-items: stretch;
+    border: 0 solid black;
+    box-sizing: border-box;
+    display: flex;
+    flex-basis: auto;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    min-height: 0px;
+    min-width: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    position: relative;
+    z-index: 0;
+}
+
+.info-alert {
+	/* background-color: #a8f0c6; */
+	background-color: rgba(245,247,249,1.00);
+	border-left: 5px solid rgba(52,109,219,1.00);
+}
+
+.info-alert .icon {
+	border-color: rgba(52,109,219,1.00);
+	color: rgba(52,109,219,1.00);
+}
+
+.info-alert {
+	/* background-color: #a8f0c6; */
+	background-color: rgba(245,247,249,1.00);
+	border-left: 5px solid rgba(52,109,219,1.00);
+}
+
+.success-alert {
+	/* background-color: #a8f0c6; */
+	background-color: rgba(245,247,249,1.00);
+	border-left: 5px solid #178344;
+}
+
+.success-alert .icon {
+	border-color: #178344;
+	color: #178344;
+}
+
+.danger-alert {
+	/* background-color: #f7a7a3; */
+	background-color: rgba(245,247,249,1.00);
+	border-left: 5px solid #8f130c;
+}
+
+.danger-alert .icon {
+	border-color: #8f130c;
+	color: #8f130c;
+}
+
+.warning-alert {
+	/* background-color: #ffd48a; */
+	background-color: rgba(245,247,249,1.00);
+	border-left: 5px solid #8a5700;
+}
+
+.warning-alert .icon {
+	border-color: #8a5700;
+	color: #8a5700;
+}

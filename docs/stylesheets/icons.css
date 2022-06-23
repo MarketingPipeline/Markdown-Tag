@@ -1,0 +1,28 @@
+/* Source: Typedoc - https://github.com/TypeStrong/typedoc/blob/master/static/icons.css */
+
+.icon {
+    display: block;
+    position: relative;
+    padding-left: 20px;
+    text-indent: -20px;
+}
+
+.td-icon:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 17px;
+    height: 17px;
+    margin: 0 3px 2px 0;
+    background-image: url(./icons.png);
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    .td-icon:before {
+        background-image: url(./icons@2x.png);
+        background-size: 238px 204px;
+    }
+}
+
+.method.td-icon:before {
+    background-position: -51px -68px;
+}
