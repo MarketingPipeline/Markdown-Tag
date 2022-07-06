@@ -19,7 +19,7 @@ const HTMLParsedElement = (() => {
 		});
 	};
 	document.addEventListener(DCL, upgrade);
-	class HTMLParsedElement extends HTMLElement {//HTMLTextAreaElement
+	class HTMLParsedElement extends HTMLElement {
 		static withParsedCallback(Class, name = 'parsed') {
 			const {
 				prototype
@@ -85,7 +85,6 @@ const HTMLParsedElement = (() => {
 })();
 
 function mdt_wc_init() {
-	const CONSOLE_LOG = window.console.log
 	class MDTag extends HTMLParsedElement {
 		#componentID
 		#input
@@ -289,13 +288,16 @@ function mdt_wc_init() {
 					const absPath = this._isPathAbsolute(url) ? url : new URL(url, window.location.href)
 					
 					this.debug("[EVENT_METHOD] [APPLY] [dFE] File path is valid. Contacting server for file...")
+					this.debug(`[EVENT_METHOD] [APPLY] [dFE] URL: ${absPath}`)
 					const res = await fetch(absPath, { method: "HEAD", mode: "no-cors" }).catch(e => {
+						this.debug("[EVENT_METHOD] [APPLY] [dFE] ERROR:", e)
 						this.debug("[EVENT_METHOD] [APPLY] [dFE] Finished")
 						resolve(false)
 					})
 					
 					this.debug("[EVENT_METHOD] [APPLY] [dFE] Server responded. Resolving.")
-					if (res) return resolve(res?.status !== 200)
+					this.debug("[EVENT_METHOD] [APPLY] [dFE] Server response:", res)
+					if (res) return resolve(res?.status === 200)
 					this.debug("[EVENT_METHOD] [APPLY] [dFE] Finished")
 				} catch(e) {
 					this.debug("[EVENT_METHOD] [APPLY] [dFE] Could not ensure file existence:", e)
@@ -322,8 +324,11 @@ function mdt_wc_init() {
 					this.debug("[EVENT_METHOD] [APPLY] [aJ] Resolving file path...")
 					const absUrl = this._isPathAbsolute(url) ? url : new URL(url, window.location.href)
 
+					this.debug(`[EVENT_METHOD] [APPLY] [aJ] URL: ${absUrl}`)
 					this.debug("[EVENT_METHOD] [APPLY] [aJ] Asserting file existence...")
 					const doesFileExist = await this.doesFileExist(absUrl)
+
+					this.debug("[EVENT_METHOD] [APPLY] [aJ] Does file exist:", doesFileExist)
 					if (!doesFileExist) {
 						this.debug("[EVENT_METHOD] [APPLY] [aJ] File does not exist. Skipping.")
 						this.debug("[EVENT_METHOD] [APPLY] [aJ] Finished")
@@ -399,21 +404,21 @@ function mdt_wc_init() {
 					}
 					case "commonmark": {
 						this.debug("[EVENT_METHOD] [APPLY] [eMP] Asserting parser 'COMMONMARK's existence...")
-						if (!window.hasOwnProperty("md")) {
+						if (!window.hasOwnProperty("markdownit")) {
 							this.debug("[EVENT_METHOD] [APPLY] [eMP] 'COMMONMARK' does not exist.")
 							try {
 								this.debug("[EVENT_METHOD] [APPLY] [eMP] Attempting to load local copy of 'COMMONMARK'...")
 								await this.addJs(`${this.parserRoot.endsWith("/") ? this.parserRoot.slice(0, -1) : this.parserRoot}/commonmark/markdown-it.min.js`).catch(e => { throw e })
 							} catch(e) {
 								this.debug("[EVENT_METHOD] [APPLY] [eMP] Local copy of 'COMMONMARK' does not exist. Attempting to download it from CDN...")
-								if (!window.hasOwnProperty("md")) {
+								if (!window.hasOwnProperty("markdownit")) {
 									await this.addJs("https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js")
 								} else {
 									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
 									return true
 								}
 
-								if (!window.hasOwnProperty("md")) {
+								if (!window.hasOwnProperty("markdownit")) {
 									this.debug("[EVENT_METHOD] [APPLY] [eMP] Unable to load markdown parser 'COMMONMARK':", e)
 									console.error(`Unable to load markdown parser "markdown-it": ${e}`)
 									this.debug("[EVENT_METHOD] [APPLY] [eMP] Finished")
@@ -678,7 +683,7 @@ function mdt_wc_init() {
 			});
 
 			this.contentObserver.observe(this, {
-				// attributes: true,
+				attributes: true,
 				characterData: true,
 				childList: true, 
 				subtree: true

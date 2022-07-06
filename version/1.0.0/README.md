@@ -20,9 +20,10 @@
 	</a>
 </p>  
 
+<h1 align="center">v1.0.0</h1>
 
 ## Documentation
-You can view the Documentation for Markdown Tag [here](https://marketingpipeline.github.io/Markdown-Tag/docs/landing) or by viewing the html file at `docs/landing`.
+You can view the Documentation for Markdown Tag [here](https://marketingpipeline.github.io/Markdown-Tag/1.0.0/docs/landing) or by viewing the html file at `docs/landing`.
 ## Example and usage
 You can view a demo of Markdown Tag in use [here](https://marketingpipeline.github.io/Markdown-Tag).
 
@@ -77,7 +78,7 @@ If you wish to use [Marked](https://marked.js.org/) syntax instead of Showdown's
 ```
 
 ## XSS Vulnerabilities
-Last test: Sun May 29 2022 16:34:25 GMT+0100
+Last test: Wed Jul 06 2022 17:11:26 GMT+0100
 
 Last Results:
 ```
@@ -114,6 +115,8 @@ Last Results:
 - [ ] GitHub Syntax Needs HTML Decoding Fixed 
 - [X] XSS Vunerability Fix
 
+## Building MarkdownTag
+In order to build MarkdownTag, edit the source code in the `src` directory, and then execute the file located at `.build/.build.js` using node.
 
 ## Contributing ![GitHub](https://img.shields.io/github/contributors/MarketingPipeline/Markdown-Tag)
 

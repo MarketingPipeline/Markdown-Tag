@@ -10,8 +10,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css">
 	<link rel="stylesheet" href="./stylesheets/global.css">
 	<link rel="stylesheet" href="./stylesheets/landing.css">
-	<!-- <script src="https://unpkg.com/@ungap/custom-elements@1.0.2/min.js"></script>  --> <!-- WIP: Extend BuiltIn Element to prevent script injection -->
-	<script src="../markdown-tag-wc.js"></script>
+	<!-- <script src="../dist/markdown-tag-wc-debug.js"></script> -->
+	<script src="../dist/markdown-tag-wc.js"></script>
 	<!-- Made by: DarkenLM -->
 </head>
 <body>
@@ -19,7 +19,7 @@
 		<div class="logo"></div>
 		<ul class="menu">
 		<div class="menu__item toggle"><span></span></div>
-		<li class="menu__item"><a href="docs.html" class="link link--dark"><i class="fa fa-book"></i> Documentation</a></li>
+		<li class="menu__item"><a href="1.0.0.html" class="link link--dark"><i class="fa fa-book"></i> Documentation</a></li>
 		<li class="menu__item"><a href="https://github.com/MarketingPipeline/Markdown-Tag" class="link link--dark"><i class="fa fa-github"></i> Github</a></li>
 		</ul>
 	</nav>
@@ -41,7 +41,7 @@
 				</ul>
 			</div>
 			<div class="hero__terminal" style="border: 1px solid var(--accent-color); background-color: var(--medium-gray-color);">
-				<md-tag id="showcase_md_tag" flavor="default" parser_root="../parsers">
+				<!--debug="true"--> <md-tag id="showcase_md_tag" flavor="default" parser_root="../parsers">
 ### Heading
 
 # H1
@@ -161,7 +161,7 @@ term
 			</div>
 			<div class="feature__item">
 				<h3 class="section__title">Easy and simple API</h3>
-				<p>Modifying the element is easy using our built-in API! Check out the <a href="1.0.0.html#api" class="button--primary">Documentation</a> to know more!</p>
+				<p>Modifying the element is easy using our built-in API! Check out the <a href="1.0.0.html#api">Documentation</a> to know more!</p>
 			</div>
 		</div>
 		<div class="callout">

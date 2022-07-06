@@ -179,7 +179,7 @@ github-md {
 github-md a:visited {
   color: #0366d6; }
 
-github-md h1, h2, h3 {
+github-md h1, github-md h2, github-md h3 {
   border-bottom: 1px solid #eaecef;
   color: #111;
   /* Darker */ }
