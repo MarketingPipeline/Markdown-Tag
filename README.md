@@ -35,7 +35,8 @@ How to use <b><i>Markdown Tag</b></i>:
   Add support to any website to use markdown ANYWHERE with a simple tag! Like so -
 
             <md>
-             # Markdown Support
+    # Markdown Support
+               
                Awesomeness
              </md>
 
