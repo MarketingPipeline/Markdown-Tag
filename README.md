@@ -105,6 +105,6 @@ participate in this project.
 
 ## License ![GitHub](https://img.shields.io/github/license/MarketingPipeline/markdown-tag)
 
-This project is licensed under the GPL-3.0 License - see the
+This project is licensed under the LGPL-2.1 License - see the
 [LICENSE.md](https://github.com/MarketingPipeline/Markdown-Tag/blob/main/LICENSE) file for
 details.
