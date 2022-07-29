@@ -13,6 +13,11 @@
 - [ ] Syntax Highlighting
 - [ ] [[Bug]: Tag(s) added after page load do not render · Issue #5](https://github.com/MarketingPipeline/Markdown-Tag/issues/5)
 - [ ] XSS Vunerability Fix
+
+---
+
+### Resources
+- [ ] [LeaVerou/md-block: A custom element for rendering stylable (light DOM) Markdown](https://github.com/LeaVerou/md-block)
          
  ```javascript
        function decodeString(string) {
