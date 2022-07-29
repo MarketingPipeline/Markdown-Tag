@@ -58,7 +58,14 @@ Instead of using a &lt;md> tag use
 
 
 
+### Handling untrusted content
+
+By default Markdown-Tag does not santize the Markdown you provide, since in most use cases the content is trusted.
+
+Any other content provided from user's on your website etc. Should be santized before adding it inside a <code>&lt;md></code> or <code>&lt;github-md></code> tag to prevent XSS. 
+
 ## Syntax
+
 
   This script uses Showdown to render Markdown - to read about the Showdown's Markdown syntax style click [here](https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax)
 
@@ -76,16 +83,7 @@ How to use <b><i>GitHub Flavored Markdown Syntax</b></i>:
        <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag-GitHub.js"></script> 
       
  
-  <i>Note:</i> This options includes - Tables, GitHub Mentions & More.
-             
-          
-## Known Issues 
-
-- [ ] GitHub Flavored Markdown Syntax is not correct 100%
-- [ ] GitHub Syntax Needs HTML Decoding Fixed 
-- [ ] XSS Vunerability Fix
-
-
+  <i>Note:</i> This options includes - Tables, GitHub Mentions & More.             
 
 
 
