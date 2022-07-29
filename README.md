@@ -58,11 +58,6 @@ Instead of using a &lt;md> tag use
 
 
 
-### Handling untrusted content
-
-By default Markdown-Tag does not santize the Markdown you provide, since in most use cases the content is trusted.
-
-Any other content provided from user's on your website etc. Should be santized before adding it inside a <code>&lt;md></code> or <code>&lt;github-md></code> tag to prevent XSS. 
 
 ## Syntax
 
@@ -86,6 +81,11 @@ How to use <b><i>GitHub Flavored Markdown Syntax</b></i>:
   <i>Note:</i> This options includes - Tables, GitHub Mentions & More.             
 
 
+## Handling untrusted content
+
+By default Markdown-Tag does not santize the Markdown you provide, since in most use cases the content is trusted.
+
+Any other content provided from user's on your website etc. Should be santized before adding it inside a <code>&lt;md></code> or <code>&lt;github-md></code> tag to prevent XSS. 
 
 
 
