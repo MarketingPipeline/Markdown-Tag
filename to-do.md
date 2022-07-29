@@ -10,7 +10,7 @@
      - [ ] Decoding Fix For HTML
      - [ ] GitHub Syntax Needs HTML Decoding Fixed 
      - [ ] Match GFM style 100%. 
-- [ ] Syntax Highlighting
+- [ ] Syntax Highlighting (PrismJS)
 - [ ] [[Bug]: Tag(s) added after page load do not render · Issue #5](https://github.com/MarketingPipeline/Markdown-Tag/issues/5)
 
 ---
