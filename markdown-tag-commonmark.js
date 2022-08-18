@@ -13,10 +13,11 @@
 /* Add Github CSS  */ 
 
 
-
+var CSSAdded = false;
 function addCss(fileName) {
 
-  var head = document.head;
+  if (CSSAdded == false){
+      var head = document.head;
   var link = document.createElement("link");
 
   link.type = "text/css";
@@ -24,8 +25,11 @@ function addCss(fileName) {
   link.href = fileName;
 
   head.appendChild(link);
-}
+  CSSAdded = true
+   
+  } 
 
+}
 
 
 if (document.getElementsByTagName("md").length > 0) {
