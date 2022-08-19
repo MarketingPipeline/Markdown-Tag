@@ -5,7 +5,7 @@
 
 /* Add Github CSS  */ 
 
-
+function renderMarkdown(){
 var CSSAdded = false;
 function addCss(fileName) {
 
@@ -68,5 +68,5 @@ GitHub_MD_TAG = document.getElementsByTagName("github-md");
 for(var i=0; i<GitHub_MD_TAG.length; i++)
 GitHub_MD_TAG[i].innerHTML = converter.makeHtml(GitHub_MD_TAG[i].innerHTML)
 }
-
-
+}
+renderMarkdown()
