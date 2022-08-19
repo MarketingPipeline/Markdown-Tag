@@ -47,7 +47,6 @@ How to use <b><i>Markdown Tag</b></i>:
     <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script> 
 
 
-
          
 
 How to use <b><i>Markdown Tag</b></i> with <b>GitHub Styling</b>:
@@ -56,6 +55,18 @@ Instead of using a &lt;md> tag use
    
          <github-md># Example </github-md>
 
+
+
+
+<br>
+
+How to <b>render</b> new text or a new Markdown Tag added to HTML:
+
+Call this function using a onclick etc..
+
+```
+renderMarkdown();
+```
 
 
 
