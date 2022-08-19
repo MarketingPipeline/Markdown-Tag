@@ -31,7 +31,7 @@ function addCss(fileName) {
 
 }
 
-
+function renderMarkdown(){
 if (document.getElementsByTagName("md").length > 0) {
 
   var MD_TAG = document.getElementsByTagName("md");
@@ -49,6 +49,8 @@ addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/styleshe
 
 var GitHub_MD_TAG = document.getElementsByTagName("github-md");
 for(var i=0; i<GitHub_MD_TAG.length; i++)
-GitHub_MD_TAG[i].innerHTML = marked.parse(GitHub_MD_TAG[i].textContent)
+GitHub_MD_TAG[i].innerHTML = marked.parse(GitHub_MD_TAG[i].innerHTML)
 
 }
+}
+renderMarkdown()
