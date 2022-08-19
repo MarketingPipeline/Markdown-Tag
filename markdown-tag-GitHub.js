@@ -27,6 +27,7 @@ function addCss(fileName) {
 
 /* Convert Markdown Tags */ 
 
+function renderMarkdown(){
 if (document.getElementsByTagName("md").length > 0) {
 
 var converter = new showdown.Converter()   
@@ -51,11 +52,16 @@ for(var i=0; i<MD_TAG.length; i++)
 MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].innerHTML)
 }
 
-
 if (document.getElementsByTagName("github-md").length > 0) {
   
 addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');
 var converter = new showdown.Converter()
+
+var s = document.createElement("script");
+s.type = "text/javascript";
+s.src = "https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.min.js";
+  
+document.head.appendChild(s);  
 
 converter.setOption('tables', 'on')
 			
@@ -76,3 +82,5 @@ GitHub_MD_TAG = document.getElementsByTagName("github-md");
 for(var i=0; i<GitHub_MD_TAG.length; i++)
 GitHub_MD_TAG[i].innerHTML = converter.makeHtml(GitHub_MD_TAG[i].innerHTML)
 }
+}
+renderMarkdown()
