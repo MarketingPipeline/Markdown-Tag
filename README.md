@@ -58,7 +58,11 @@ Instead of using a &lt;md> tag use
 
 
 
+
+
 <br>
+
+
 
 How to <b>render</b> new text or a new Markdown Tag added to HTML:
 
@@ -90,6 +94,14 @@ How to use <b><i>GitHub Flavored Markdown Syntax</b></i>:
       
  
   <i>Note:</i> This options includes - Tables, GitHub Mentions & More.             
+
+
+## Syntax Highlighting 
+
+By **default** using a <code>&lt;github-md></code> will automatically add a CSS stylesheet for GitHub like syntax hightlighting colors. 
+
+To use Syntax Highlighting with a <code>&lt;md></code> tag, you will need to apply a CSS stylesheet. You can find a list of Syntax Hightlighting Stylesheets that work with Markdown Tag [here](https://github.com/PrismJS/prism-themes)
+
 
 
 ## Handling untrusted content
