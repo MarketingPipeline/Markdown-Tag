@@ -52,13 +52,13 @@ if (document.getElementsByTagName("md").length > 0) {
 converter.setOption('tables', 'on')
 			
 converter.setOption('emoji', 'on')
-converter.setOption('simpleLineBreaks', 'on')
-converter.setOption('strikethrough', 'on');
 
+converter.setOption('strikethrough', 'on');
   
 MD_TAG = document.getElementsByTagName("md");
 for(var i=0; i<MD_TAG.length; i++)
-MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].innerHTML)
+	  /// Temp fix for Gitub Block Quotes
+MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].innerHTML.replace(/&gt;/g, '>'))
 }
 
 
@@ -77,8 +77,6 @@ converter.setOption('emoji', 'on')
 converter.setOption('strikethrough', 'on')
 
 converter.setOption('tasklists', 'true')
-  
-  converter.setOption('simpleLinkBreaks', 'true')
 
 
 converter.setOption('ghMentions', 'true')
