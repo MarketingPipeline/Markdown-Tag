@@ -1,3 +1,9 @@
+/**!
+ * @license Markdown-Tag - Add Markdown to any HTML using a <md> tag
+ * LICENSED UNDER GPL-3.0 LICENSE
+ * MARKDOWN FLAVOUR: COMMONMARK FLAVORED MARKDOWN. 
+ * MORE INFO / FLAVOR OPTIONS CAN BE FOUND AT https://github.com/MarketingPipeline/Markdown-Tag/
+ */
 var Debug = false;
 function renderMarkdown(){
   
