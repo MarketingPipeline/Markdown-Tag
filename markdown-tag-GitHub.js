@@ -49,7 +49,7 @@ function addSyntaxHighlightCss(fileName) {
   link.href = fileName;
 
   head.appendChild(link);
-  CSSAdded = true
+  SyntaxCSSAdded = true
    
   } 
 
