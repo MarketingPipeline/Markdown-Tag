@@ -76,7 +76,7 @@ for(var i=0; i<GitHub_MD_TAG.length; i++)
   /// Temp fix for Gitub Block Quotes
    GitHub_MD_TAG = GitHub_MD_TAG[i]
   GitHub_MD_TAG.classList.add("github-md");
-GitHub_MD_TAG.innerHTML = converter.makeHtml(GitHub_MD_TAG[i].innerHTML.replace(/&gt;/g, '>'))
+GitHub_MD_TAG.innerHTML = converter.makeHtml(GitHub_MD_TAG.innerHTML.replace(/&gt;/g, '>'))
 
 }  
   
