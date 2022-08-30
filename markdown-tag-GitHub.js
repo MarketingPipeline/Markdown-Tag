@@ -59,6 +59,8 @@ function addSyntaxHighlightCss(fileName) {
 if (document.getElementsByTagName("md").length > 0) {
 
  
+  addSyntaxHighlighter();
+	
   if (Debug == true){
     console.log("Found <MD> tags- converting to HTML ")
   } 
@@ -87,7 +89,8 @@ MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].innerHTML)
 
 if (document.getElementsByTagName("github-md").length > 0) {
   
-addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');  addSyntaxHighlightCss('https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-ghcolors.css');
+addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');  
+addSyntaxHighlightCss('https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-ghcolors.css');
   
   addSyntaxHighlighter();
  
