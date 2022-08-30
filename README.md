@@ -98,6 +98,8 @@ How to use <b><i>GitHub Flavored Markdown Syntax</b></i>:
 
 ## Syntax Highlighting 
 
+> Note: to use Syntax Hightlighting - you must use the GitHub flavored version of <b><i>Markdown Tag</i></b>.
+
 By **default** using a <code>&lt;github-md></code> will automatically add a CSS stylesheet for GitHub like syntax hightlighting colors. 
 
 To use Syntax Highlighting with a <code>&lt;md></code> tag, you will need to apply a CSS stylesheet. You can find a list of Syntax Hightlighting Stylesheets that work with Markdown Tag [here](https://github.com/PrismJS/prism-themes)
