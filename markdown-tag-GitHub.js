@@ -167,7 +167,7 @@ function loadMarkdownParser(){
   
   /// Add Markdown Parser To Document
 var script = document.createElement('script');
-script.src = "https://cdn.jsdelivr.net/npm/showdown@latest/dist/showdown.min.js";
+script.src = "https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/parsers/showdown.min.js";
 
 document.head.appendChild(script); //or something of the likes  
   
