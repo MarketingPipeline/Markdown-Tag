@@ -89,7 +89,7 @@ MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].innerHTML)
 
 if (document.getElementsByTagName("github-md").length > 0) {
   
-addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');  
+addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/stylesheets/github_md.min.css');  
 addSyntaxHighlightCss('https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-ghcolors.css');
   
   addSyntaxHighlighter();
