@@ -50,7 +50,7 @@ MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].innerHTML.replace(/&gt;/g, '>
 
 if (document.querySelectorAll('[github-md]').length > 0) {
   
-addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');
+addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/stylesheets/github_md.min.css');
  
 
   var converter = new showdown.Converter() 
@@ -101,7 +101,7 @@ MD_TAG[i].innerHTML = converter.makeHtml(MD_TAG[i].innerHTML.replace(/&gt;/g, '>
 
 if (document.getElementsByTagName("github-md").length > 0) {
   
-addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');
+addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/stylesheets/github_md.min.css');
  
 
   var converter = new showdown.Converter() 
@@ -134,12 +134,11 @@ GitHub_MD_TAG[i].innerHTML = converter.makeHtml(GitHub_MD_TAG[i].innerHTML.repla
 
 
 
-
 function loadMarkdownParser(){
   
   /// Add Markdown Parser To Document
 var script = document.createElement('script');
-script.src = "https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/parsers/showdown.min.js";
+script.src = "https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/parsers/showdown.min.js";
 
 document.head.appendChild(script); //or something of the likes  
   
