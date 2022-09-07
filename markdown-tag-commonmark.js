@@ -42,7 +42,7 @@ MD_TAG[i].innerHTML = marked.parse(MD_TAG[i].textContent)
 
 if (document.getElementsByTagName("github-md").length > 0) {
 
-addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Elements/stylesheets/github_md.css');  
+addCss('https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/stylesheets/github_md.min.css');  
  
 
 var GitHub_MD_TAG = document.getElementsByTagName("github-md");
